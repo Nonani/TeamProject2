@@ -3,7 +3,6 @@ package teamproject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import teamassignment.User;
 
 public class UserManager extends DBManager {
 
