@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/cjw12/eclipse-workspace/TeamProject2/mariadb-java-client-2.5.1.jar">
+	<classpathentry kind="lib" path="C:/Users/cjw12/git/TeamProject2/TeamProject2/mariadb-java-client-2.5.1.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

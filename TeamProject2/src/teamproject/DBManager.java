@@ -17,7 +17,7 @@ public abstract class DBManager {
 			conn = DriverManager.getConnection( "jdbc:mariadb://127.0.0.1:3306/mydb", "root", "1234"); 
 			if( conn != null ) 
 			{ 
-				//System.out.println("DB 立加 己傍 "); 
+				System.out.println("DB 立加 己傍 "); 
 			} 
 		} catch (ClassNotFoundException e) {
 			System.out.println("[JDBC Connector Driver Error : " + e.getMessage() + "]");
