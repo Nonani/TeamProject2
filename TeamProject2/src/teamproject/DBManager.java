@@ -14,7 +14,7 @@ public abstract class DBManager {
 	protected void connectDB() {
 		try { 
 			Class.forName("org.mariadb.jdbc.Driver"); 
-			conn = DriverManager.getConnection( "jdbc:mariadb://127.0.0.1:3306/mydb", "root", "1234"); 
+			conn = DriverManager.getConnection( "jdbc:mariadb://127.0.0.1:5306/teamproject_db", "root", "1234"); 
 			if( conn != null ) 
 			{ 
 				System.out.println("DB 접속 성공 "); 
