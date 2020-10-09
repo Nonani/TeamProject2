@@ -5,15 +5,15 @@ public class Movie {
 	private String director;
 	private String time;	//time은 우선 string으로 처리하여 구현 후, 시간 처리를 어떻게 할지를 생각한 후 수정
 	private int age_limit;
-	private double book_rate;
+	private int theater_num;
 	
-	public Movie(String name, String director, String time, int age_limit, double book_rate) {
+	public Movie(String name, String director, String time, int age_limit, int theater_num) {
 		super();
 		this.name = name;
 		this.director = director;
 		this.time = time;
 		this.age_limit = age_limit;
-		this.book_rate = book_rate;
+		this.theater_num = theater_num;
 	}
 
 	public String getName() {
@@ -48,13 +48,12 @@ public class Movie {
 		this.age_limit = age_limit;
 	}
 
-	public double getBook_rate() {
-		return book_rate;
-	}
-
-	public void setBook_rate(double book_rate) {
-		this.book_rate = book_rate;
+	public int getTheater_num() {
+		return theater_num;
 	}
 	
+	public void setTheater_num(int theater_num) {
+		this.theater_num = theater_num;
+	}
 	
 }
