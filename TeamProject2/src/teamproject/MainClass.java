@@ -8,8 +8,8 @@ public class MainClass {
 		
 		UserManager um = new UserManager();
 		MovieManager mm = new MovieManager();
-		um.showAll();
-		mm.showAll();
+//		um.showAll();
+//		mm.showAll();
 		Scanner scan=new Scanner(System.in);
 		// 로그인/회원가입
 		while(true) {
@@ -31,7 +31,7 @@ public class MainClass {
 							switch(_idx) {
 							case "1":
 							{
-								System.out.println("1: 영화 추가\t2: 영화 삭제");
+								System.out.println("1: 영화 추가\t2: 영화 삭제\n[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 								String __idx = scan.nextLine();
 								if(__idx.equals("1"))
 									mm.addMovie();
@@ -43,8 +43,14 @@ public class MainClass {
 								break;
 							case "2":
 								break;
-							default:
+								
+							case "x":
+							case "X":
 								excape = false;
+								break;
+								
+							default:
+								System.out.println("올바르지 않은 입력값입니다.");
 							}
 						}
 						break;

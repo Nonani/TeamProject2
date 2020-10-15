@@ -1,7 +1,11 @@
 package teamproject;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -40,6 +44,7 @@ public class MovieManager extends DBManager {
 	@Override
 	public void showAll() {
 		// TODO Auto-generated method stub
+		System.out.println("영화 리스트 : ");
 		for(int i=0;i<m_list.size();i++) {
 			System.out.println(m_list.get(i));
 		}
@@ -55,8 +60,15 @@ public class MovieManager extends DBManager {
 		name = scan.nextLine();
 		System.out.print("감독을 입력하세요 : ");
 		director = scan.nextLine();
-		System.out.print("상영시간을 입력하세요 : ");
-		time = scan.nextLine();
+		while(true) {
+			System.out.print("상영시간을 입력하세요 : ");
+			time = scan.nextLine();
+			if(checkTime(time))
+				break;
+			System.out.println("올바르지 않은 입력값입니다.");
+				
+		}
+		
 		System.out.print("연령 제한을 입력하세요 : ");
 		age_limit = scan.nextInt();
 		System.out.print("상영관 번호를 입력하세요 : ");
@@ -72,8 +84,8 @@ public class MovieManager extends DBManager {
 				pstmt.setInt(4, age_limit);
 				pstmt.setInt(5, theater);
 				pstmt.execute();
-				System.out.println("성공적으로 영화를 추가하였습니다.");
-				
+				m_list.add(new Movie(name, director, time, age_limit, theater));
+				System.out.println("해당 영화가 추가되었습니다.");
 			} catch(SQLException e) {
 				// TODO Auto-generated catch block
 //				e.printStackTrace();
@@ -84,6 +96,34 @@ public class MovieManager extends DBManager {
 	public void delMovie() {
 		System.out.println("영화 삭제");
 		
+	}
+	
+	private Boolean checkTime(String _time) {
+		
+		Date today = new Date ();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmm");
+		dateFormat.setLenient(false);	//까다롭게 겁사
+		Date reqDate;
+		try {
+			reqDate = dateFormat.parse(_time);
+			long reqDateTime = reqDate.getTime();
+			
+			today = dateFormat.parse(dateFormat.format(today));
+			long todayTime = today.getTime();
+			
+			//분으로 표현
+//			long minute = (curDateTime - reqDateTime) / 60000;
+			
+			if(reqDateTime-todayTime>0)
+				return true;
+			else
+				return false;
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+//			System.out.println("parse오류");
+			return false;
+		}
 	}
 	
 }
