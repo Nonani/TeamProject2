@@ -13,11 +13,10 @@ public class MainClass {
 		Scanner scan=new Scanner(System.in);
 		// 로그인/회원가입
 		while(true) {
-			int idx=0;
 			System.out.println("1. 로그인 / 2. 회원가입");
-			idx=scan.nextInt();
+			String idx = scan.nextLine();
 			switch(idx) {
-			case 1:{	//1: 로그인
+			case "1":{	//1: 로그인
 				int numI = um.checkId();
 				if(numI!=-1) {
 					int numP = um.checkPwd(numI);
@@ -25,6 +24,29 @@ public class MainClass {
 					case 1:	//관리자 계정으로 로그인 성공
 					{	//관리자 모드
 						System.out.println("관리자 모드로 로그인 성공");
+						Boolean excape = true;
+						while(excape) {
+							System.out.println("1: 영화 추가/삭제\t2: 검색\t3: 로그아웃");
+							String _idx = scan.nextLine();
+							switch(_idx) {
+							case "1":
+							{
+								System.out.println("1: 영화 추가\t2: 영화 삭제");
+								String __idx = scan.nextLine();
+								if(__idx.equals("1"))
+									mm.addMovie();
+								else if(__idx.equals("2"))
+									mm.delMovie();
+								else
+									System.out.println("잘못된 입력입니다.");
+							}
+								break;
+							case "2":
+								break;
+							default:
+								excape = false;
+							}
+						}
 						break;
 					}
 					case 2:	//일반 유저로 로그인성공
@@ -45,7 +67,7 @@ public class MainClass {
 				
 				break;
 			}
-			case 2:	// 2: 회원가입
+			case "2":	// 2: 회원가입
 				um.registerUser();
 				break;
 			default:

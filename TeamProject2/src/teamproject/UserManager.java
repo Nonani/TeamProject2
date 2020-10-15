@@ -37,8 +37,8 @@ public class UserManager extends DBManager {
 	}
 	public int checkId() {
 		System.out.println("아이디를 입력해주세요.");
-		Scanner str=new Scanner(System.in);
-		String Id=str.nextLine();
+		Scanner scan=new Scanner(System.in);
+		String Id=scan.nextLine();
 		int ok=-1;
 		
 		for(int i=0;i<u_list.size();i++) {
@@ -53,8 +53,8 @@ public class UserManager extends DBManager {
 	
 	public int checkPwd(int num) {
 		System.out.println("비밀번호를 입력해주세요.");
-		Scanner str=new Scanner(System.in);
-		String Pwd=str.nextLine();
+		Scanner scan=new Scanner(System.in);
+		String Pwd=scan.nextLine();
 		if(num==0&&Pwd.equals("admin"))	//admin인 경우 0
 			return 1;
 		else if(Pwd.equals(u_list.get(num).getPwd())) {	//일반 유저인 경우
