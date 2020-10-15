@@ -55,5 +55,13 @@ public class Movie {
 	public void setTheater_num(int theater_num) {
 		this.theater_num = theater_num;
 	}
+
+	@Override
+	public String toString() {
+		return "Movie [name=" + name + ", director=" + director + ", time=" + time + ", age_limit=" + age_limit
+				+ ", theater_num=" + theater_num + "]";
+	}
+	
+	
 	
 }

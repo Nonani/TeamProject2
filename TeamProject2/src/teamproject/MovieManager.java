@@ -43,5 +43,5 @@ public class MovieManager extends DBManager {
 			System.out.println(m_list.get(i));
 		}
 	}
-
+	
 }

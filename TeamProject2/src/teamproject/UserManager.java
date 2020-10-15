@@ -38,18 +38,15 @@ public class UserManager extends DBManager {
 	public int checkId() {
 		System.out.println("아이디를 입력해주세요.");
 		Scanner str=new Scanner(System.in);
-		String Id=str.next();
+		String Id=str.nextLine();
 		int ok=-1;
+		
 		for(int i=0;i<u_list.size();i++) {
 			if(Id.equals(u_list.get(i).getId())) {
-				System.out.println("아이디가 일치합니다.");
+//				System.out.println("아이디가 일치합니다.");
 				ok=i;
 				break;
 			}
-		}
-		if(ok==-1) {
-			System.out.println("존재하지 않는 아이디입니다.");
-			System.out.println("로그인/회원가입 선택화면으로 돌아갑니다.");
 		}
 		return ok;
 	}
@@ -57,16 +54,14 @@ public class UserManager extends DBManager {
 	public int checkPwd(int num) {
 		System.out.println("비밀번호를 입력해주세요.");
 		Scanner str=new Scanner(System.in);
-		String Pwd=str.next();
-		int ok=-1;
-		if(Pwd.equals(u_list.get(num).getPwd())) {
-			System.out.println("비밀번호가 일치합니다");
-			ok=1;
-		}else{
-			System.out.println("비밀번호가 일치하지 않습니다.");
-			System.out.println("로그인/회원가입 선택화면으로 돌아갑니다.");
-		}
-		return ok;
+		String Pwd=str.nextLine();
+		if(num==0&&Pwd.equals("admin"))	//admin인 경우 0
+			return 1;
+		else if(Pwd.equals(u_list.get(num).getPwd())) {	//일반 유저인 경우
+			return 2;
+		}else	//로그인 실패
+			return 3;
+		
 	}
 	
 	public void registerUser() {
