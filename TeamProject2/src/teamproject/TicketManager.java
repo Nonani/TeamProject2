@@ -41,7 +41,22 @@ public class TicketManager extends DBManager {
 			}
 		}
 	}
-
+	
+	public void SearchUser(String id) {
+		User u = um.getUser(id);
+		
+		if(u==null) {
+			System.out.println("존재하지 않는 유저 정보입니다.");
+			return;
+		}
+		
+		
+		for(int i=0;i<t_list.size();i++) {
+			if(t_list.get(i).getUser().equals(u))
+				System.out.println(t_list.get(i).getMovie());
+		}
+	}
+	
 	@Override
 	public void showAll() {
 		// TODO Auto-generated method stub
