@@ -46,7 +46,7 @@ public class MovieManager extends DBManager {
 		// TODO Auto-generated method stub
 		System.out.println("영화 리스트 : ");
 		for(int i=0;i<m_list.size();i++) {
-			if(!m_list.get(i).getTime().equals("0000000000"))
+			if(!m_list.get(i).getTime().equals("000000000000"))
 				System.out.println(m_list.get(i));
 		}
 	}
@@ -110,11 +110,11 @@ public class MovieManager extends DBManager {
 		System.out.print("삭제할 영화의 id를 입력하세요 : ");
 		int id = scan.nextInt();
 		if(getMovie(id)!=null) {
-			getMovie(id).setTime("0000000000");
+			getMovie(id).setTime("000000000000");
 			String sql = "update movie set time = ? where id = ?";
 	        try {
 	        	pstmt = conn.prepareStatement(sql);
-	        	pstmt.setString(1, "0000000000");
+	        	pstmt.setString(1, "000000000000");
 				pstmt.setInt(2, id);
 	            pstmt.execute();
 	          
