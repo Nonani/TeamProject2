@@ -164,4 +164,35 @@ public class MovieManager extends DBManager {
 		return null;
 	}
 	
+	public void SearchTheater(int id) {
+		int cnt=0;
+		for(int i=0;i<m_list.size();i++) {
+			if(m_list.get(i).getTheater_num()==id) {
+				System.out.println(m_list.get(i));
+				cnt++;
+			}
+		}
+		if(cnt==0)
+			System.out.println("존재하지 않는 상영관입니다.");
+	}
+	
+	public void SearchMovie(String name) {
+		String sql = "select * from movie where name like ?";
+		if(conn!=null)
+		{
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+name+"%");
+				rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					System.out.println(new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
+				} 
+			} catch (SQLException e) {
+				// TODO: handle exception
+				System.out.println("영화 테이블 읽어오기 실패!");
+				e.printStackTrace();
+			}
+		}
+	}
 }

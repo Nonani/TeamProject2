@@ -32,7 +32,7 @@ public class TicketManager extends DBManager {
 				rs = pstmt.executeQuery();
 				while(rs.next())
 				{
-					t_list.add(new Ticket(mm.getMovie(rs.getInt(1)), um.getUser(rs.getString(2)), rs.getInt(3)));
+					t_list.add(new Ticket(mm.getMovie(rs.getInt(1)), um.getUser(rs.getString(2)), rs.getInt(3), rs.getInt(4)));
 				} 
 			} catch (SQLException e) {
 				// TODO: handle exception
@@ -56,6 +56,8 @@ public class TicketManager extends DBManager {
 				System.out.println(t_list.get(i).getMovie());
 		}
 	}
+	
+	
 	
 	@Override
 	public void showAll() {
