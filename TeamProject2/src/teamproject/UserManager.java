@@ -121,5 +121,13 @@ public class UserManager extends DBManager {
 		}
 
 	}
+	
+	public User getUser(String id) {
+		for(int i=0;i<u_list.size();i++) {
+			if(u_list.get(i).getId().equals(id))
+				return u_list.get(i); 
+		}
+		return null;
+	}
 
 }

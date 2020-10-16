@@ -1,14 +1,14 @@
 package teamproject;
 
 public class Movie {
-	private String id;
+	private int id;
 	private String name;
 	private String director;
 	private String time;	//time은 우선 string으로 처리하여 구현 후, 시간 처리를 어떻게 할지를 생각한 후 수정
 	private int age_limit;
 	private int theater_num;
 	
-	public Movie(String id, String name, String director, String time, int age_limit, int theater_num) {
+	public Movie(int id, String name, String director, String time, int age_limit, int theater_num) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -20,11 +20,11 @@ public class Movie {
 
 	
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

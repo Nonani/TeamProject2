@@ -8,8 +8,11 @@ public class MainClass {
 		
 		UserManager um = new UserManager();
 		MovieManager mm = new MovieManager();
+		TicketManager tm = new TicketManager(um, mm);
+//		tm.showAll();
 //		um.showAll();
 //		mm.showAll();
+		
 		Scanner scan=new Scanner(System.in);
 		// 로그인/회원가입
 		while(true) {
@@ -43,6 +46,23 @@ public class MainClass {
 							}
 								break;
 							case "2":
+							{
+								System.out.println("1.사용자 검색\t2.영화 검색]t3.상영관 검색\n" + 
+										"[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+								
+								String __idx = scan.nextLine();
+								if(__idx.equals("1")) {
+									
+								}
+								
+								else if(__idx.equals("2")) {
+									System.out.println("영화 검색");
+									mm.showAll();
+								}
+								else
+									System.out.println("잘못된 입력입니다.");
+								
+							}
 								break;
 								
 							case "x":

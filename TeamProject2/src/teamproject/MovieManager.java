@@ -31,7 +31,7 @@ public class MovieManager extends DBManager {
 				rs = pstmt.executeQuery();
 				while(rs.next())
 				{
-					m_list.add(new Movie(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
+					m_list.add(new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
 				} 
 			} catch (SQLException e) {
 				// TODO: handle exception
@@ -88,10 +88,11 @@ public class MovieManager extends DBManager {
 				sql = "Select last_insert_id() as id from movie";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
-				String id="";
+				int id=0;
 				while(rs.next())
 				{
-					id= rs.getString("id");
+					
+					id= rs.getInt("id");
 				} 
 				m_list.add(new Movie(id, name, director, time, age_limit, theater));
 				System.out.println("해당 영화가 추가되었습니다.");
@@ -107,14 +108,14 @@ public class MovieManager extends DBManager {
 		System.out.println("영화 삭제");
 		showAll();
 		System.out.print("삭제할 영화의 id를 입력하세요 : ");
-		String id = scan.nextLine();
+		int id = scan.nextInt();
 		if(getMovie(id)!=null) {
 			getMovie(id).setTime("0000000000");
 			String sql = "update movie set time = ? where id = ?";
 	        try {
 	        	pstmt = conn.prepareStatement(sql);
 	        	pstmt.setString(1, "0000000000");
-				pstmt.setString(2, id);
+				pstmt.setInt(2, id);
 	            pstmt.execute();
 	          
 	        } catch (SQLException e) {
@@ -142,12 +143,11 @@ public class MovieManager extends DBManager {
 			
 			//분으로 표현
 //			long minute = (curDateTime - reqDateTime) / 60000;
-			
+			System.out.println(reqDateTime-todayTime);
 			if(reqDateTime-todayTime>0)
 				return true;
 			else
 				return false;
-			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 //			System.out.println("parse오류");
@@ -155,9 +155,10 @@ public class MovieManager extends DBManager {
 		}
 	}
 	
-	public Movie getMovie(String id) {
+	public Movie getMovie(int id) {
 		for(int i=0;i<m_list.size();i++) {
-			if(m_list.get(i).getId().equals(id)&&(!m_list.get(i).getTime().equals("0000000000")))
+			//&&(!m_list.get(i).getTime().equals("0000000000"))
+			if(m_list.get(i).getId()==id)
 				return m_list.get(i); 
 		}
 		return null;
