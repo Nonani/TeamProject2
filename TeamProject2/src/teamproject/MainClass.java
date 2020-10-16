@@ -20,6 +20,7 @@ public class MainClass {
 				int numI = um.checkId();
 				if(numI!=-1) {
 					int numP = um.checkPwd(numI);
+			
 					switch(numP){
 					case 1:	//관리자 계정으로 로그인 성공
 					{	//관리자 모드
