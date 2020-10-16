@@ -143,7 +143,7 @@ public class MovieManager extends DBManager {
 			
 			//분으로 표현
 //			long minute = (curDateTime - reqDateTime) / 60000;
-			System.out.println(reqDateTime-todayTime);
+//			System.out.println(reqDateTime-todayTime);
 			if(reqDateTime-todayTime>0)
 				return true;
 			else
