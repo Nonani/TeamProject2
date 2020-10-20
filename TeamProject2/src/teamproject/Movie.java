@@ -7,8 +7,9 @@ public class Movie {
 	private String time;	//time은 우선 string으로 처리하여 구현 후, 시간 처리를 어떻게 할지를 생각한 후 수정
 	private int age_limit;
 	private int theater_num;
+	private int date;
 	
-	public Movie(int id, String name, String director, String time, int age_limit, int theater_num) {
+	public Movie(int id, String name, String director, String time, int age_limit, int theater_num, int date) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -16,6 +17,7 @@ public class Movie {
 		this.time = time;
 		this.age_limit = age_limit;
 		this.theater_num = theater_num;
+		this.date=date;
 	}
 
 	
@@ -67,13 +69,20 @@ public class Movie {
 	public void setTheater_num(int theater_num) {
 		this.theater_num = theater_num;
 	}
+	public int getDate() {
+		return date;
+	}
+	
+	public void setDate(int date) {
+		this.date = date;
+	}
 
 
 
 	@Override
 	public String toString() {
 		return "Movie [id=" + id + ", name=" + name + ", director=" + director + ", time=" + time + ", age_limit="
-				+ age_limit + ", theater_num=" + theater_num + "]";
+				+ age_limit + ", theater_num=" + theater_num + ", date=" + date + "]";
 	}
 
 

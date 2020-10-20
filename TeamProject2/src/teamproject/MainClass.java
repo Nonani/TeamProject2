@@ -95,8 +95,35 @@ public class MainClass {
 					case 2:	//일반 유저로 로그인성공
 					{
 						System.out.println("로그인 성공");
-						break;
+						Boolean escape = true;
+						while(escape) {
+							System.out.println("1: 영화 예매\t2: 영화 확인 및 취소\t3: 영화검색\t4: 로그아웃");
+							String idx_1 = scan.nextLine();
+							switch(idx_1) {
+							case "1":{
+								int a = mm.book(um.u_list.get(numI).getId(),tm.t_list.size());
+							}
+							break;
+							case "2":{
+								
+							}
+							break;
+							case "3":{
+								
+							}
+							break;
+							case "x":
+							case "X":
+							case "4":
+								escape=false;
+								break;
+							default:
+								System.out.println("올바르지 않은 입력값입니다.");
+							}
+						
+						}
 					}
+					break;
 					default:	//로그인 실패
 						System.out.println("비밀번호가 일치하지 않습니다.");
 						System.out.println("로그인/회원가입 선택화면으로 돌아갑니다.");

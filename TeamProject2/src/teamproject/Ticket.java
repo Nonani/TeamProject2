@@ -35,7 +35,7 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket\n"+id+"관"+"\n" + m + "\n" + u;
+		return "Ticket\n"+id+"관"+"\n" + m + "\n" + u; //@@@@@@@@@@@@@@@ id+관? 하면 상영관 넘버와 다름
 	}
 	
 	
