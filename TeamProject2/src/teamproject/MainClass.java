@@ -104,7 +104,7 @@ public class MainClass {
 								int a = mm.book(um.u_list.get(numI).getId(),tm.t_list.size());
 							}
 							break;
-							case "2":{
+							case "2":{ //영화 취소 단계 예매 취소시 ticket DB에 u_id가 NULL로 바뀐다.
 								int b = mm.checkBookandCancel(um.u_list.get(numI).getId());
 							}
 							break;
