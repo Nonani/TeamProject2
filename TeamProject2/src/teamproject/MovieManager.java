@@ -246,6 +246,7 @@ public class MovieManager extends DBManager {
 		String idx=scan.next();
 		return idx;
 	}
+	
 	public String selectNumOfPersons() {
 		Scanner scan=new Scanner(System.in);
 		System.out.println("몇 사람이 관람하시겠습니까?");
@@ -253,10 +254,12 @@ public class MovieManager extends DBManager {
 		String idx=scan.next();
 		return idx;
 	}
+	
 	public void showSeat() {
 		System.out.println("좌석을 보여준다");
 		//구현 예정
 	}
+	
 	public String[] selectSeat(int num) {
 		Scanner scan=new Scanner(System.in);
 		showSeat();
@@ -269,6 +272,7 @@ public class MovieManager extends DBManager {
 		}
 		return idx;
 	}
+	
 	public String determine() {
 		Scanner scan=new Scanner(System.in);
 		System.out.println("예매 내역을 확정하시겠습니까?(y/n)");
@@ -298,6 +302,16 @@ public class MovieManager extends DBManager {
 			}
 		}
 		return idx;
+	}
+	
+	public void showBooklist() {
+		
+	}
+	
+	public void checkBookandCancel() {
+		System.out.println("사용자모드>예매 확인 및 취소");
+		System.out.println("예매정보");
+		
 	}
 	
 	public int book(String u_id,int t_size) {

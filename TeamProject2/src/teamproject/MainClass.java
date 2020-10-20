@@ -9,7 +9,7 @@ public class MainClass {
 		UserManager um = new UserManager();
 		MovieManager mm = new MovieManager();
 		TicketManager tm = new TicketManager(um, mm);
-		tm.showAll();
+//		tm.showAll();
 //		um.showAll();
 //		mm.showAll();
 		
