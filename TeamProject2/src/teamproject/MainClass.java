@@ -105,7 +105,7 @@ public class MainClass {
 							}
 							break;
 							case "2":{
-								
+								int b = mm.checkBookandCancel(um.u_list.get(numI).getId());
 							}
 							break;
 							case "3":{

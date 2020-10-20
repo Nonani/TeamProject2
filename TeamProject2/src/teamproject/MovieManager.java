@@ -296,7 +296,6 @@ public class MovieManager extends DBManager {
 					}
 				} catch (SQLException e) {
 					// TODO: handle exception
-					System.out.println("유저테이블 읽어오기 실패!");
 					e.printStackTrace();
 				}
 			}
@@ -304,13 +303,84 @@ public class MovieManager extends DBManager {
 		return idx;
 	}
 	
-	public void showBooklist() {
+	public int[] showBooklist(String u_id) {
+		int size=0;
+		String sql="select * from ticket";
+		if(conn!=null) {
+			try {
+				pstmt=conn.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					if(rs.getString(2).contentEquals(u_id)) {
+						System.out.println("티켓 인덱스 : "+rs.getInt(4)+"\t"+getMovie(rs.getInt(1)).getDate()+"\t"+getMovie(rs.getInt(1)).getName()+"\t\t"+getMovie(rs.getInt(1)).getTime()+"\t"+getMovie(rs.getInt(1)).getTheater_num()+"\t"+"좌석번호"+rs.getInt(3));
+						size++;
+					}
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		int idx[]=new int[size];
 		
+		int i=0;
+		if(conn!=null) {
+			try {
+				pstmt=conn.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					if(rs.getString(2).contentEquals(u_id)) {
+						idx[i]=rs.getInt(4);
+						i++;	
+					}
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		
+		return idx;
 	}
 	
-	public void checkBookandCancel() {
+	public int checkBookandCancel(String u_id) {
+		Scanner scan=new Scanner(System.in);
 		System.out.println("사용자모드>예매 확인 및 취소");
 		System.out.println("예매정보");
+		int arr[]=showBooklist(u_id);
+		while(true) {
+			System.out.println("취소하려는 예매내역을 입력해주세요");
+			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+			String idx=scan.next();
+			int ok=-1;
+			if(idx.contentEquals("x")||idx.contentEquals("X")) {
+				return 0;
+			}
+			for(int i=0;i<arr.length;i++) {
+				if(Integer.parseInt(idx)==arr[i]) {
+					String sql="update ticket set u_id = ? where idx = ?";
+					if(conn!=null) {
+						try {
+							pstmt=conn.prepareStatement(sql);
+							pstmt.setString(1, "NULL");
+							pstmt.setInt(2, Integer.parseInt(idx));
+							pstmt.execute();
+						} catch (SQLException e) {
+							// TODO: handle exception
+							e.printStackTrace();
+						}
+					}
+					ok=1;
+				}
+			}
+			if(ok==-1) {
+				System.out.println("올바르지 않은 입력값입니다.");
+				continue;
+			}
+			break;
+		}
+		
+		return 0;
 		
 	}
 	
