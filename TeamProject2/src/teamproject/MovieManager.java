@@ -454,4 +454,83 @@ public class MovieManager extends DBManager {
 		return 1;	
 		
 	}
+	public void SearchMovieByAge(int age) {
+		String sql = "select * from movie where age_limit = ?";
+		if(conn!=null)
+		{
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, age);
+				rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					System.out.println(new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+				} 
+			} catch (SQLException e) {
+				// TODO: handle exception
+				System.out.println("영화 테이블 읽어오기 실패!");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public int Search() {
+		Scanner scan=new Scanner(System.in);
+		boolean escape=true;
+		while(escape) {
+			System.out.println("사용자모드>영화검색");
+			System.out.println("1.영화제목 검색 2.연령제한 검색");
+			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+			String idx=scan.next();
+			switch(idx) {
+			case "1" : {
+				System.out.println("사용자모드>영화검색>영화제목 검색");
+				System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+				String idx_2=scan.next();
+				if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
+					break;
+				}
+				SearchMovie(idx_2);
+				System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
+				String idx_3=scan.next();
+				if(idx_3.contentEquals("x")||idx_3.contentEquals("X")) {
+					return 1;
+				}else {
+					break;
+				}
+			}
+	
+			case "2" : {
+				System.out.println("사용자모드>영화검색>연령제한 검색");
+				System.out.println("몇 세 이상 관람 가능 영화를 찾으시나요?");
+				System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+				String idx_2=scan.next();
+				if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
+					break;
+				}
+				SearchMovieByAge(Integer.parseInt(idx_2));
+				System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
+				String idx_3=scan.next();
+				if(idx_3.contentEquals("x")||idx_3.contentEquals("X")) {
+					return 1;
+				}else {
+					break;
+				}
+			}
+			case "x":
+			case "X": {
+				return 1;
+			}
+			default :{
+				System.out.println("올바르지 않은 입력값입니다.");
+				continue;
+			}
+			
+			}
+		
+		}
+		return 0;
+	}
+	
 }
+

@@ -109,9 +109,14 @@ public class MainClass {
 							}
 							break;
 							case "3":{
-								
+								int c = mm.Search();
+								if(c==1) {
+									continue;
+								}else if(c==0) {
+									break;
+								}
 							}
-							break;
+							
 							case "x":
 							case "X":
 							case "4":
