@@ -32,6 +32,12 @@ public class Ticket {
 	public void setUser(User u) {
 		this.u = u;
 	}
+	public int getS_id() {
+		return s_id;
+	}
+	public void setS_id(int s_id) {
+		this.s_id = s_id;
+	}
 
 	@Override
 	public String toString() {

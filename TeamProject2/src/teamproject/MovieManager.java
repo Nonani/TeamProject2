@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 
 public class MovieManager extends DBManager {
-
+	
 	ArrayList<Movie> m_list = new ArrayList<Movie>();
 	
 	public MovieManager() {
@@ -135,7 +135,7 @@ public class MovieManager extends DBManager {
 		
 		Date today = new Date ();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmm");
-		dateFormat.setLenient(false);	//까다롭게 겁사
+		dateFormat.setLenient(false);	//까다롭게 검사
 		Date reqDate;
 		try {
 			reqDate = dateFormat.parse(_time);
@@ -238,9 +238,17 @@ public class MovieManager extends DBManager {
 		return ok;
 	}
 	
-	public String selectMovie() {
+	public void showSelectedMovie(int date) {
+		System.out.println("<영화 리스트>");
+		for(int i=0;i<m_list.size();i++) {
+			if(!m_list.get(i).getTime().equals("000000000000")&&m_list.get(i).getDate()==date)
+				System.out.println(m_list.get(i));
+		}
+	}
+	
+	public String selectMovie(int date) {
 		Scanner scan=new Scanner(System.in);
-		showAll(); //@@@@@@@@@@@@@@@@@선택 날짜 영화만 나오도록 수정해야함@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		showSelectedMovie(date); //@@@@@@@@@@@@@@@@@선택 날짜 영화만 나오도록 수정해야함@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		System.out.println("어느 영화를 선택하시겠습니까?");
 		System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 		String idx=scan.next();
@@ -255,14 +263,48 @@ public class MovieManager extends DBManager {
 		return idx;
 	}
 	
-	public void showSeat() {
-		System.out.println("좌석을 보여준다");
-		//구현 예정
+	public void showSeat(int id,UserManager um,MovieManager mm) {
+		System.out.println("######좌석#####");
+		int arr[][]=new int[8][8]; 
+		int arr2[][]=new int[8][8];
+		TicketManager tm=new TicketManager(um,mm);
+
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				arr[i][j]=(8*i)+j+1;
+				arr2[i][j]=0;
+			}
+		}
+		
+		System.out.println(tm.t_list.size());
+		
+		if(tm.t_list.size()!=0) {
+			for(int i=0;i<tm.t_list.size();i++) {
+				for(int j=0;j<8;j++) {
+					for(int k=0;k<8;k++) {
+						if(tm.t_list.get(i).getMovie().getId()==id&&tm.t_list.get(i).getS_id()==arr[j][k]) {
+							arr2[j][k]=1;
+						}
+					}
+				}
+					
+			}
+		}
+		
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				if(arr2[i][j]==0)
+					System.out.print("□");
+				else if(arr2[i][j]==1)
+					System.out.print("■");
+			}
+			System.out.print("\n");
+		}
 	}
 	
-	public String[] selectSeat(int num) {
+	public String[] selectSeat(int num,int id,UserManager um,MovieManager mm) {
 		Scanner scan=new Scanner(System.in);
-		showSeat();
+		showSeat(id,um,mm);
 		String idx[]=new String[num];
 		for(int i=0;i<num;i++) {
 			System.out.println("어느 좌석을 선택하시겠습니까?");
@@ -384,7 +426,7 @@ public class MovieManager extends DBManager {
 		
 	}
 	
-	public int book(String u_id,int t_size) {
+	public int book(String u_id,int t_size,UserManager um,MovieManager mm) {
 		System.out.println("사용자모드>영화예매>날짜선택");
 		int nowdate = showDate();
 		String date = getDate(nowdate); //영화날짜
@@ -393,7 +435,7 @@ public class MovieManager extends DBManager {
 		}
 		System.out.println("사용자모드>영화예매>날짜선택>영화선택");
 		System.out.println(date);
-		String idx=selectMovie();  //영화 id
+		String idx=selectMovie(Integer.parseInt(date));  //영화 id
 		if(idx.contentEquals("x")||idx.contentEquals("X")) {
 			return 0;
 		}
@@ -410,7 +452,7 @@ public class MovieManager extends DBManager {
 		System.out.println("사용자모드>영화예매>날짜선택>영화선택>인수선택>영화좌석선택");
 		System.out.println(": "+ date +"\t"+ m_list.get(idx_2).getName() +"영화"+"\t"+ m_list.get(idx_2).getTime() +"\t"+ m_list.get(idx_2).getTheater_num()+"관"+"\t"+idx_3+"명");
 		String idx_4[]=new String[num];
-		idx_4=selectSeat(num); //좌석 정보 배열
+		idx_4=selectSeat(num,Integer.parseInt(idx),um,mm); //좌석 정보 배열
 		int s_id[]=new int[num];
 		s_id=translation(idx_4,num);
 		

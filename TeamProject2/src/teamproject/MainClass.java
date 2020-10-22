@@ -101,7 +101,7 @@ public class MainClass {
 							String idx_1 = scan.nextLine();
 							switch(idx_1) {
 							case "1":{
-								int a = mm.book(um.u_list.get(numI).getId(),tm.t_list.size());
+								int a = mm.book(um.u_list.get(numI).getId(),tm.t_list.size(),um,mm);
 							}
 							break;
 							case "2":{ //영화 취소 단계 예매 취소시 ticket DB에 u_id가 NULL로 바뀐다.
