@@ -57,27 +57,32 @@ public class MovieManager extends DBManager {
 		String name, director, time;
 		int age_limit, theater, date;
 		
-		System.out.print("영화 이름을 입력하세요 : ");
-		name = scan.nextLine();
-		System.out.print("감독을 입력하세요 : ");
-		director = scan.nextLine();
 		while(true) {
+			System.out.println("상영 날짜를 입력하세요 : ");
+			date = scan.nextInt();
+			
 			System.out.print("상영시간을 입력하세요 : ");
 			time = scan.nextLine();
-			if(checkTime(time))
+			if(checkTime(date, time))
 				break;
 			System.out.println("올바르지 않은 입력값입니다.");
 				
 		}
 		
+		System.out.print("영화 이름을 입력하세요 : ");
+		name = scan.nextLine();
+		System.out.print("감독을 입력하세요 : ");
+		director = scan.nextLine();
+		
 		System.out.print("연령 제한을 입력하세요 : ");
 		age_limit = scan.nextInt();
 		System.out.print("상영관 번호를 입력하세요 : ");
 		theater = scan.nextInt();
-		System.out.println("상영 날짜를 입력하세요 : ");
-		date = scan.nextInt();
 		
-		String sql="insert into movie(name, director, time, age_limit, theater, date) values(?,?,?,?,?)";
+		
+		
+		
+		String sql="insert into movie(name, director, time, age_limit, theater, date) values(?,?,?,?,?,?)";
 		if(conn!=null) {
 			try {
 				pstmt=conn.prepareStatement(sql);
@@ -131,7 +136,7 @@ public class MovieManager extends DBManager {
 		}
 	}
 	
-	private Boolean checkTime(String _time) {
+	private Boolean checkTime(String _date, String _time) {
 		
 		Date today = new Date ();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmm");
