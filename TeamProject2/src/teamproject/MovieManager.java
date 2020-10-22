@@ -248,7 +248,7 @@ public class MovieManager extends DBManager {
 	
 	public String selectMovie(int date) {
 		Scanner scan=new Scanner(System.in);
-		showSelectedMovie(date); //@@@@@@@@@@@@@@@@@선택 날짜 영화만 나오도록 수정해야함@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		showSelectedMovie(date); 
 		System.out.println("어느 영화를 선택하시겠습니까?");
 		System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 		String idx=scan.next();
@@ -276,13 +276,12 @@ public class MovieManager extends DBManager {
 			}
 		}
 		
-		System.out.println(tm.t_list.size());
-		
 		if(tm.t_list.size()!=0) {
 			for(int i=0;i<tm.t_list.size();i++) {
+//확인용			System.out.println(tm.t_list.get(i).getMovie().getId()+","+tm.t_list.get(i).getS_id()+","+id);
 				for(int j=0;j<8;j++) {
 					for(int k=0;k<8;k++) {
-						if(tm.t_list.get(i).getMovie().getId()==id&&tm.t_list.get(i).getS_id()==arr[j][k]) {
+						if(tm.t_list.get(i).getMovie().getId()==id&&tm.t_list.get(i).getS_id()==arr[j][k]&&!tm.t_list.get(i).getUser().getName().contentEquals("NULL")) {
 							arr2[j][k]=1;
 						}
 					}
@@ -439,10 +438,18 @@ public class MovieManager extends DBManager {
 		if(idx.contentEquals("x")||idx.contentEquals("X")) {
 			return 0;
 		}
-		int idx_2=Integer.parseInt(idx)-1;
-			
+		int idx_2=Integer.parseInt(idx);
+		String Mname=null;
+		for(int i=0;i<m_list.size();i++) {
+			if(m_list.get(i).getId()==idx_2) {
+				Mname=m_list.get(i).getName();
+				idx_2=i;
+				break;
+			}
+		}
+		System.out.println("영화 id : "+idx+"index : "+idx_2);
 		System.out.println("사용자모드>영화예매>날짜선택>영화선택>인수선택");
-		System.out.println(": "+ date +"\t"+ m_list.get(idx_2).getName() +"영화"+"\t"+ m_list.get(idx_2).getTime() +"\t"+ m_list.get(idx_2).getTheater_num()+"관");
+		System.out.println(": "+ date +"\t"+ Mname +"영화"+"\t"+ m_list.get(idx_2).getTime() +"\t"+ m_list.get(idx_2).getTheater_num()+"관");
 		String idx_3=selectNumOfPersons(); //예매 인수
 		if(idx_3.contentEquals("x")||idx_3.contentEquals("X")) {
 			return 0;
@@ -450,7 +457,7 @@ public class MovieManager extends DBManager {
 		int num=Integer.parseInt(idx_3);  //예매 인수
 		
 		System.out.println("사용자모드>영화예매>날짜선택>영화선택>인수선택>영화좌석선택");
-		System.out.println(": "+ date +"\t"+ m_list.get(idx_2).getName() +"영화"+"\t"+ m_list.get(idx_2).getTime() +"\t"+ m_list.get(idx_2).getTheater_num()+"관"+"\t"+idx_3+"명");
+		System.out.println(": "+ date +"\t"+ Mname +"영화"+"\t"+ m_list.get(idx_2).getTime() +"\t"+ m_list.get(idx_2).getTheater_num()+"관"+"\t"+idx_3+"명");
 		String idx_4[]=new String[num];
 		idx_4=selectSeat(num,Integer.parseInt(idx),um,mm); //좌석 정보 배열
 		int s_id[]=new int[num];
@@ -460,7 +467,7 @@ public class MovieManager extends DBManager {
 		
 		System.out.println("사용자모드>영화예매>날짜선택>영화선택>인수선택>영화좌석선택>예매확정");
 		System.out.println("예매 내역");
-		System.out.println(": "+ date +"\t"+ m_list.get(idx_2).getName() +"영화"+"\t"+ m_list.get(idx_2).getTime() +"\t"+ m_list.get(idx_2).getTheater_num()+"관"+"\t"+idx_3+"명");
+		System.out.println(": "+ date +"\t"+ Mname +"영화"+"\t"+ m_list.get(idx_2).getTime() +"\t"+ m_list.get(idx_2).getTheater_num()+"관"+"\t"+idx_3+"명");
 		while(true) {
 			String y_or_n = determine(); 
 			if(y_or_n.contentEquals("y")||y_or_n.contentEquals("Y")) {
@@ -473,7 +480,7 @@ public class MovieManager extends DBManager {
 							pstmt.setInt(1, m_list.get(idx_2).getId());
 							pstmt.setString(2, u_id);
 							pstmt.setInt(3, s_id[i]);
-							pstmt.setInt(4,t_size+i+1);
+							pstmt.setInt(4,t_size+1);
 							pstmt.execute();
 						} catch(SQLException e) {
 							// TODO Auto-generated catch block

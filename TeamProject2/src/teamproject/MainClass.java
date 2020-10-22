@@ -97,11 +97,12 @@ public class MainClass {
 						System.out.println("로그인 성공");
 						Boolean escape = true;
 						while(escape) {
+							TicketManager tm_1=new TicketManager(um,mm);
 							System.out.println("1: 영화 예매\t2: 영화 확인 및 취소\t3: 영화검색\t4: 로그아웃");
 							String idx_1 = scan.nextLine();
 							switch(idx_1) {
 							case "1":{
-								int a = mm.book(um.u_list.get(numI).getId(),tm.t_list.size(),um,mm);
+								int a = mm.book(um.u_list.get(numI).getId(),tm_1.t_list.size(),um,mm);
 							}
 							break;
 							case "2":{ //영화 취소 단계 예매 취소시 ticket DB에 u_id가 NULL로 바뀐다.
