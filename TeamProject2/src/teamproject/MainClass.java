@@ -35,38 +35,49 @@ public class MainClass {
 							switch(_idx) {
 							case "1":
 							{
+								System.out.println("관리자 모드 > 영화 추가/삭제");
 								System.out.println("1: 영화 추가\t2: 영화 삭제\n[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 								String __idx = scan.nextLine();
 								if(__idx.equals("1"))
+								{
+									System.out.println("관리자 모드 > 영화 추가/삭제 > 추가");
 									mm.addMovie();
-								else if(__idx.equals("2"))
+								}
+									
+								else if(__idx.equals("2")) {
+									System.out.println("관리자 모드 > 영화 추가/삭제 > 삭제");
 									mm.delMovie();
+								}
+									
 								else
 									System.out.println("잘못된 입력입니다.");
 							}
 								break;
 							case "2":
 							{
+								System.out.println("관리자 모드 > 검색");
 								System.out.println("1: 사용자 검색\t2.영화 검색\t3.상영관 검색\n" + 
 										"[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 								
 								String __idx = scan.nextLine();
 								if(__idx.equals("1")) {
-									System.out.println("사용자 검색");
+									System.out.println("관리자 모드 > 검색 > 사용자 검색");
+									
 									System.out.print("검색할 사용자의 id를 입력하세요 : ");
 									String u_id = scan.nextLine();
 									tm.SearchUser(u_id);
 								}
 								
 								else if(__idx.equals("2")) {
-									System.out.println("영화 검색");
+									System.out.println("관리자 모드 > 검색 > 영화 검색");
 									mm.showAll();
 									System.out.print("영화 이름을 입력하세요 : ");
 									String name = scan.nextLine();
 									mm.SearchMovie(name);
 								}
 								else if(__idx.equals("3")) {
-									System.out.println("상영관 검색");
+									System.out.println("관리자 모드 > 검색 > 상영관 검색");
+									
 									//전체 상영관 출력기능 구현 예정
 									//mm.showTotalTheather()
 		
