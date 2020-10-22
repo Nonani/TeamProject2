@@ -540,6 +540,7 @@ public class MovieManager extends DBManager {
 				if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
 					break;
 				}
+				System.out.println("검색하고자 하는 영화를 입력해주세요");
 				SearchMovie(idx_2);
 				System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 				String idx_3=scan.next();
