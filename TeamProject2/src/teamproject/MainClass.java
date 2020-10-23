@@ -27,7 +27,7 @@ public class MainClass {
 					switch(numP){
 					case 1:	//관리자 계정으로 로그인 성공
 					{	//관리자 모드
-						System.out.println("관리자 모드로 로그인 성공");
+						System.out.println("관리자 모드");
 						Boolean excape = true;
 						while(excape) {
 							System.out.println("1: 영화 추가/삭제\t2: 검색\t3: 로그아웃");
@@ -79,13 +79,14 @@ public class MainClass {
 									System.out.println("관리자 모드 > 검색 > 상영관 검색");
 									
 									//전체 상영관 출력기능 구현 예정
-									//mm.showTotalTheather()
+									mm.showTotalTheather();
 		
 									
 									System.out.print("검색할 상영관의 번호를 입력하세요 : ");
 									int t_id = scan.nextInt();
-									
+									scan.nextLine();
 									mm.SearchTheater(t_id);
+									
 								}else
 									System.out.println("잘못된 입력입니다.");
 								

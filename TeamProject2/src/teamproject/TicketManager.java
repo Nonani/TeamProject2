@@ -50,10 +50,21 @@ public class TicketManager extends DBManager {
 			return;
 		}
 		
-		
+		int cnt = 0;
 		for(int i=0;i<t_list.size();i++) {
-			if(t_list.get(i).getUser().equals(u))
-				System.out.println(t_list.get(i).getMovie());
+			if(t_list.get(i).getUser().equals(u)) {
+				cnt++;
+			}
+		}
+		if(cnt==0) {
+			System.out.println("영화 예매 내역이 존재하지 않습니다.");
+			return;
+		}else {
+			for(int i=0;i<t_list.size();i++) {
+				if(t_list.get(i).getUser().equals(u)) {
+					System.out.println(t_list.get(i).getMovie());
+				}
+			}
 		}
 	}
 	

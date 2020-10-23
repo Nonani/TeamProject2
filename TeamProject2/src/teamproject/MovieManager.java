@@ -5,7 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -53,18 +56,21 @@ public class MovieManager extends DBManager {
 	
 	public void addMovie() {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("영화 추가");
 		String name, director, time;
 		int age_limit, theater, date;
 		
 		
 		while(true) {
-			System.out.println("상영 날짜를 입력하세요 : ");
+			System.out.print("상영 날짜를 입력하세요 : ");
 			date = scan.nextInt();
-			
+			scan.nextLine();
 			System.out.print("상영시간을 입력하세요 : ");
 			time = scan.nextLine();
-			if(checkTime(date, time))
+			System.out.print("상영관 번호를 입력하세요 : ");
+			theater = scan.nextInt();
+			scan.nextLine();
+			
+			if(checkTime(date, time, theater))
 				break;
 			System.out.println("올바르지 않은 입력값입니다.");
 				
@@ -77,8 +83,7 @@ public class MovieManager extends DBManager {
 		
 		System.out.print("연령 제한을 입력하세요 : ");
 		age_limit = scan.nextInt();
-		System.out.print("상영관 번호를 입력하세요 : ");
-		theater = scan.nextInt();
+		scan.nextLine();
 		
 		
 		
@@ -119,6 +124,11 @@ public class MovieManager extends DBManager {
 		System.out.print("삭제할 영화의 id를 입력하세요 : ");
 		int id = scan.nextInt();
 		if(getMovie(id)!=null) {
+			if(getMovie(id).getTime().equals("00000000"))
+			{
+				System.out.println("올바르지 않은 입력값입니다.");
+				return;
+			}
 			getMovie(id).setTime("00000000");
 			String sql = "update movie set time = ? where id = ?";
 	        try {
@@ -137,37 +147,75 @@ public class MovieManager extends DBManager {
 		}
 	}
 	
-	private Boolean checkTime(int _date, String _time) {
+	private Boolean checkTime(int _date, String _time, int theater) {
 		
 		Date today = new Date ();
-		long startDateTime;
-		long endDateTime;
+		long startTime;
+		long endTime;
 		long todayTime;
+		
+		Calendar cal = Calendar.getInstance();
+		int today_year = cal.get(Calendar.YEAR);
+		int today_month = cal.get(Calendar.MONTH) + 1;
+		int today_day = cal.get(Calendar.DAY_OF_MONTH);
+		int today_hour = cal.get(Calendar.HOUR_OF_DAY);
+		int today_min = cal.get(Calendar.MINUTE);
+		
+		int today_date = today_year*10000+today_month*100+today_day;
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HHmm");
 		dateFormat.setLenient(false);	//까다롭게 검사
-		Date startDate, endDate;
+		Date start, end;
 		try {
-			startDate = dateFormat.parse(_time.substring(0, 4));
-			startDateTime = startDate.getTime();
+			start = dateFormat.parse(_time.substring(0, 4));
+			startTime = start.getTime();
 			
-			endDate = dateFormat.parse(_time.substring(4));
-			endDateTime = endDate.getTime();
+			end= dateFormat.parse(_time.substring(4));
+			endTime = end.getTime();
 			
 			today = dateFormat.parse(dateFormat.format(today));
 			todayTime = today.getTime();
 			
 			//분으로 표현
 //			long minute = (curDateTime - reqDateTime) / 60000;
-//			System.out.println(reqDateTime-todayTime);
-			if(reqDateTime-todayTime>0)
-				return true;
-			else
+			if(today_date>_date)
+			{
+				System.out.println("이미 지난 날짜입니다.");
 				return false;
+			}else if(today_date==_date){
+				if(startTime - todayTime<0) {
+					System.out.println("test");
+					return false;
+				}
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 //			System.out.println("parse오류");
 			return false;
 		}
+		
+		for(Movie m : m_list) {
+			
+			if(m.getTime().equals("00000000"))
+				continue;
+			
+			if(m.getTheater_num()==theater&&m.getDate()==_date) {
+				try {
+					Date _start = dateFormat.parse(m.getTime().substring(0,4));
+					Date _end = dateFormat.parse(m.getTime().substring(4));
+					long _startTime = _start.getTime();
+					long _endTime = _end.getTime();
+					if(_startTime <= startTime && endTime <= _endTime)
+						return false;
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					return false;
+					
+				} 
+			}
+		}
+		
+		return true;
 	}
 	
 	public Movie getMovie(int id) {
@@ -178,11 +226,26 @@ public class MovieManager extends DBManager {
 		}
 		return null;
 	}
-	
+	public void showTotalTheather() {
+		System.out.println("전체 상영관 : ");
+		HashSet<Integer> set = new HashSet<Integer>();
+		for(int i=0;i<m_list.size();i++) {
+			if(m_list.get(i).getTime().equals("00000000"))
+				continue;
+			set.add(m_list.get(i).getTheater_num());
+		}
+		List<Integer> theaterList = new ArrayList<Integer>(set);
+		Collections.sort(theaterList);
+		for(Integer i: theaterList) {
+			System.out.println(i+" 관");
+		}
+	}
 	public void SearchTheater(int id) {
 		int cnt=0;
 		for(int i=0;i<m_list.size();i++) {
 			if(m_list.get(i).getTheater_num()==id) {
+				if(m_list.get(i).getTime().equals("00000000"))
+					continue;
 				System.out.println(m_list.get(i));
 				cnt++;
 			}
@@ -199,10 +262,14 @@ public class MovieManager extends DBManager {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, "%"+name+"%");
 				rs = pstmt.executeQuery();
+				int cnt=0;
 				while(rs.next())
 				{
+					cnt++;
 					System.out.println(new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
 				} 
+				if(cnt==0)
+					System.out.println("존재하지 않는 영화입니다.");
 			} catch (SQLException e) {
 				// TODO: handle exception
 				System.out.println("영화 테이블 읽어오기 실패!");
