@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 
 
@@ -164,9 +165,19 @@ public class MovieManager extends DBManager {
 		int today_date = today_year*10000+today_month*100+today_day;
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HHmm");
+		SimpleDateFormat testdateFormat = new SimpleDateFormat("yyyyMMdd");
 		dateFormat.setLenient(false);	//±î´Ù·Ó°Ô °Ë»ç
+		testdateFormat.setLenient(false);
+		try {
+			Date test_Day = testdateFormat.parse(Integer.toString(_date));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+			return false;
+		}
 		Date start, end;
 		try {
+			
 			start = dateFormat.parse(_time.substring(0, 4));
 			startTime = start.getTime();
 			
@@ -215,6 +226,8 @@ public class MovieManager extends DBManager {
 			}
 		}
 		
+		if(startTime==endTime)
+			return false;
 		return true;
 	}
 	
@@ -662,5 +675,23 @@ public class MovieManager extends DBManager {
 		return 0;
 	}
 	
+	
+	public static boolean isInteger(String s) {	//¼ıÀÚ·Î¸¸ ÀÌ·ç¾îÁø ¹®ÀÚ¿­ÀÎÁö ÆÇº°ÇÏ´Â ÇÔ¼ö
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
+	    }
+	    return true;
+	}
+	
+	public static boolean isPasswordType(String word) {	//ºñ¹Ğ¹øÈ£ Á¶°Ç¿¡ ¸¸Á·ÇÏ´Â ¹®ÀÚ¿­ÀÎÁö ÆÇº°ÇÏ´Â ÇÔ¼ö
+        return Pattern.matches("^[0-9a-zA-Z]*$", word);
+    }
+	public static boolean isNameType(String word) {	//ÀÌ¸§ Á¶°Ç¿¡ ¸¸Á·ÇÏ´Â ¹®ÀÚ¿­ÀÎÁö ÆÇº°ÇÏ´Â ÇÔ¼ö
+        return Pattern.matches("^[a-zA-Z°¡-ÆR]*$", word);
+    }
 }
 
