@@ -70,7 +70,7 @@ public class UserManager extends DBManager {
 			int ok=-1;
 			Scanner scan=new Scanner(System.in);
 			System.out.println("아이디를 입력하세요");
-			String Id=scan.next();
+			String Id=scan.nextLine();
 			for(int i=0;i<u_list.size();i++) {
 				if(Id.contentEquals(u_list.get(i).getId())){
 					System.out.println("아이디 중복! 다른 아이디를 입력하세요");
@@ -83,17 +83,17 @@ public class UserManager extends DBManager {
 				continue;
 			}
 			System.out.println("비밀번호를 입력하세요");
-			String Pwd=scan.next();
+			String Pwd=scan.nextLine();
 			System.out.println("비밀번호 확인을 위해 다시 입력해주세요");
-			String Pwd2=scan.next();
+			String Pwd2=scan.nextLine();
 			if(!Pwd.contentEquals(Pwd2)) {
 				System.out.println("비밀번호가 일치하지 않습니다.");
 				continue;
 			}
 			System.out.println("이름 전화번호 나이를 순서대로 입력해주세요");
-			String name=scan.next();
-			String phone=scan.next();
-			int age=scan.nextInt();
+			String name=scan.nextLine();
+			String phone=scan.nextLine();
+			String age=scan.nextLine();
 			String sql="insert into user values(?,?,?,?,?)";
 			if(conn!=null) {
 				try {
@@ -102,7 +102,7 @@ public class UserManager extends DBManager {
 					pstmt.setString(2, Pwd);
 					pstmt.setString(3, name);
 					pstmt.setString(4, phone);
-					pstmt.setInt(5, age);
+					pstmt.setInt(5, Integer.parseInt(age));
 					pstmt.execute();
 				} catch(SQLException e) {
 					// TODO Auto-generated catch block
