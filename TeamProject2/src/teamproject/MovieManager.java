@@ -77,11 +77,21 @@ public class MovieManager extends DBManager {
 				
 		}
 		
-		System.out.print("영화 이름을 입력하세요 : ");
-		name = scan.nextLine();
-		System.out.print("감독을 입력하세요 : ");
-		director = scan.nextLine();
+		while(true) {
+			System.out.print("영화 이름을 입력하세요 : ");
+			name = scan.nextLine();
+			if(name.length()<=30)
+				break;
+			System.out.println("올바르지 않은 입력값입니다.");
+		}
 		
+		while(true) {
+			System.out.print("감독을 입력하세요 : ");
+			director = scan.nextLine();
+			if(director.length()<=30)
+				break;
+			System.out.println("올바르지 않은 입력값입니다.");
+		}
 		System.out.print("연령 제한을 입력하세요 : ");
 		age_limit = scan.nextInt();
 		scan.nextLine();
