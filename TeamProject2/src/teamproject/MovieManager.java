@@ -59,23 +59,30 @@ public class MovieManager extends DBManager {
 		Scanner scan = new Scanner(System.in);
 		String name, director, time;
 		int age_limit, theater, date;
-		
-		
 		while(true) {
-			System.out.print("상영 날짜를 입력하세요 : ");
-			date = scan.nextInt();
-			scan.nextLine();
-			System.out.print("상영시간을 입력하세요 : ");
-			time = scan.nextLine();
-			System.out.print("상영관 번호를 입력하세요 : ");
-			theater = scan.nextInt();
-			scan.nextLine();
 			
-			if(checkTime(date, time, theater))
-				break;
-			System.out.println("올바르지 않은 입력값입니다.");
+			try {
+				System.out.print("상영 날짜를 입력하세요 : ");
+				date = scan.nextInt();
+				scan.nextLine();
+				System.out.print("상영시간을 입력하세요 : ");
+				time = scan.nextLine();
+				System.out.print("상영관 번호를 입력하세요 : ");
+				theater = scan.nextInt();
+				scan.nextLine();
+				
+				if(checkTime(date, time, theater))
+					break;
+				System.out.println("올바르지 않은 입력값입니다.");
+			} catch (Exception e) {
+				// TODO: handle exception\
+				System.out.println("올바르지 않은 입력값입니다.");
+				scan.nextLine();
+			}
 				
 		}
+		
+		
 		
 		while(true) {
 			System.out.print("영화 이름을 입력하세요 : ");
