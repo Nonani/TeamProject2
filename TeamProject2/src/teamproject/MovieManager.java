@@ -252,6 +252,7 @@ public class MovieManager extends DBManager {
 			if(m.getTime().equals("00000000"))
 				continue;
 			
+			
 			if(m.getTheater_num()==theater&&m.getDate()==_date) {	//_time = 리스트 내의 영화 시간, time = 등록할 영화 시간
 				try {
 					Date _start = dateFormat.parse(m.getTime().substring(0,4));
