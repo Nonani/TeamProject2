@@ -333,21 +333,22 @@ public class MovieManager extends DBManager {
 			}
 		}
 	}
-	
-	public int showDate() {
+	//영화 예매단계
+	public int showDate() {              //현재 날짜를 보여주고 현재 날짜 리턴 
 		Calendar cal=Calendar.getInstance();
 		int year=cal.get(Calendar.YEAR);
 		int month=cal.get(Calendar.MONTH)+1;
 		int day=cal.get(Calendar.DAY_OF_MONTH);
 		System.out.println("현재 날짜 : "+year+month+day);
-		return year+month+day;
+		int result=year*10000+month*100+day;
+		return result;
 	}
-	
-	public String getDate(int nowdate) {
+	//영화 예매단계
+	public String getDate(int nowdate) {     //현재날짜를 인자로 받고 사용자에게 영화를 볼 날짜를 입력받는다
 		Scanner scan=new Scanner(System.in);
-		System.out.println("날짜를 입력해주세요. [ex)2020년 10월 10일 = 20201010]"
-				+"[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 		while(true) {
+			System.out.println("날짜를 입력해주세요. [ex)2020년 10월 10일 = 20201010]"
+					+"[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 			String date=scan.nextLine();
 			if(date.contentEquals("x")||date.contentEquals("X")) {
 				return date;
@@ -356,13 +357,14 @@ public class MovieManager extends DBManager {
 				continue;
 			}else if(checkDate(Integer.parseInt(date))==-1) {
 				System.out.println("해당 날짜에 영화정보가 없습니다.");
+				System.out.println("다시 날짜를 입력해주세요");
 				continue;
 			}
 			return date;
 		}
 	}
-	
-	public int checkDate(int date) {
+	//영화 예매단계
+	public int checkDate(int date) {          //해당 날짜에 맞는 영화정보가 있는지 확인
 		int size=m_list.size();
 		int ok=-1;
 		for(int i=0;i<size;i++) {
@@ -372,33 +374,60 @@ public class MovieManager extends DBManager {
 		}
 		return ok;
 	}
-	
-	public void showSelectedMovie(int date) {
+	//영화 예매단계
+	public void showSelectedMovie(int date) {          //선택된 날짜의 영화 리스트를 보여준다
 		System.out.println("<영화 리스트>");
 		for(int i=0;i<m_list.size();i++) {
 			if(!m_list.get(i).getTime().equals("00000000")&&m_list.get(i).getDate()==date)
 				System.out.println(m_list.get(i));
 		}
 	}
-	
-	public String selectMovie(int date) {
+	//영화 예매단계
+	public String selectMovie(int date) {             //인자로 받은 날짜에 상영중인 영화중 사용자에게 선택을 받음 영화 고유 id를 받아서 리턴한다
 		Scanner scan=new Scanner(System.in);
-		showSelectedMovie(date); 
-		System.out.println("어느 영화를 선택하시겠습니까?");
-		System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
-		String idx=scan.nextLine();
+		showSelectedMovie(date);
+		String idx="null";
+		int ok=-1;
+		while(true) {
+			System.out.println("어느 영화를 선택하시겠습니까?");
+			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+			idx=scan.nextLine();
+			if(idx.contentEquals("x")||idx.contentEquals("X")) {
+				return idx;
+			}else {
+				for(int i=0 ;i<m_list.size();i++) {
+					if(m_list.get(i).getDate()==date && m_list.get(i).getId()==Integer.parseInt(idx)) {
+						ok=1;
+						break;
+					}
+				}
+				if(ok==-1) {
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+			}
+			break;
+		}
 		return idx;
 	}
-	
-	public String selectNumOfPersons() {
+	//영화 예매단계
+	public String selectNumOfPersons() {           //영화 예매 인원을 받는다
 		Scanner scan=new Scanner(System.in);
-		System.out.println("몇 사람이 관람하시겠습니까?");
-		System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
-		String idx=scan.nextLine();
+		String idx;
+		while(true) {
+			System.out.println("몇 사람이 관람하시겠습니까?");
+			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+			idx=scan.nextLine();
+			if(Integer.parseInt(idx)<1||Integer.parseInt(idx)>64) {
+				System.out.println("올바르지 않은 입력값입니다.");
+				continue;
+			}else
+				break;
+		}
 		return idx;
 	}
-	
-	public void showSeat(int id,UserManager um,MovieManager mm) {
+	//영화 예매단계
+	public void showSeat(int id,UserManager um,MovieManager mm) {    //좌석 리스트를 보여준다
 		System.out.println("######좌석#####");
 		int arr[][]=new int[8][8]; 
 		int arr2[][]=new int[8][8];
@@ -435,29 +464,41 @@ public class MovieManager extends DBManager {
 			System.out.print("\n");
 		}
 	}
-	
-	public String[] selectSeat(int num,int id,UserManager um,MovieManager mm) {
+	//영화 예매단계
+	public String[] selectSeat(int num,int id,UserManager um,MovieManager mm) {  //좌석을 선택받아 문자열 배열에 저장한다
 		Scanner scan=new Scanner(System.in);
 		showSeat(id,um,mm);
 		String idx[]=new String[num];
 		for(int i=0;i<num;i++) {
-			System.out.println("어느 좌석을 선택하시겠습니까?");
-			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
-			idx[i]=scan.nextLine();
-			idx[i]=idx[i].toUpperCase();
+			while(true) {
+				System.out.println("어느 좌석을 선택하시겠습니까?");
+				System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+				idx[i]=scan.nextLine();
+				idx[i]=idx[i].replaceAll("\\p{Z}","");
+				idx[i]=idx[i].toUpperCase();
+				char[] ch=idx[i].toCharArray();
+				if(idx[i].length()!=2) {
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}else if(ch[0]<65||ch[0]>72||ch[1]<1||ch[1]>8) {
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				break;
+			}
 		}
 		return idx;
 	}
-	
-	public String determine() {
+	//영화 예매단계 
+	public String determine() { //예매 확정단계
 		Scanner scan=new Scanner(System.in);
 		System.out.println("예매 내역을 확정하시겠습니까?(y/n)");
 		System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 		String idx=scan.nextLine();
 		return idx;
 	}
-	
-	public int[] translation(String[] str,int num) {
+	//영화 예매단계
+	public int[] translation(String[] str,int num) {  //좌석을 입력받으면 이에 해당하는 int형 s_id로 바꿔주는 함수
 		int idx[]=new int[num];
 		for(int i=0;i<num;i++) {
 			String sql="select * from seat_info";
@@ -479,87 +520,7 @@ public class MovieManager extends DBManager {
 		return idx;
 	}
 	
-	public int[] showBooklist(String u_id) {
-		int size=0;
-		String sql="select * from ticket";
-		if(conn!=null) {
-			try {
-				pstmt=conn.prepareStatement(sql);
-				rs=pstmt.executeQuery();
-				while(rs.next()) {
-					if(rs.getString(2).contentEquals(u_id)) {
-						System.out.println("티켓 인덱스 : "+rs.getInt(4)+"\t"+getMovie(rs.getInt(1)).getDate()+"\t"+getMovie(rs.getInt(1)).getName()+"\t\t"+getMovie(rs.getInt(1)).getTime()+"\t"+getMovie(rs.getInt(1)).getTheater_num()+"\t"+"좌석번호"+rs.getInt(3));
-						size++;
-					}
-				}
-			} catch (SQLException e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-		}
-		int idx[]=new int[size];
-		
-		int i=0;
-		if(conn!=null) {
-			try {
-				pstmt=conn.prepareStatement(sql);
-				rs=pstmt.executeQuery();
-				while(rs.next()) {
-					if(rs.getString(2).contentEquals(u_id)) {
-						idx[i]=rs.getInt(4);
-						i++;	
-					}
-				}
-			} catch (SQLException e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-		}
-		
-		return idx;
-	}
-	
-	public int checkBookandCancel(String u_id) {
-		Scanner scan=new Scanner(System.in);
-		System.out.println("사용자모드>예매 확인 및 취소");
-		System.out.println("예매정보");
-		int arr[]=showBooklist(u_id);
-		while(true) {
-			System.out.println("취소하려는 예매내역을 입력해주세요");
-			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
-			String idx=scan.nextLine();
-			int ok=-1;
-			if(idx.contentEquals("x")||idx.contentEquals("X")) {
-				return 0;
-			}
-			for(int i=0;i<arr.length;i++) {
-				if(Integer.parseInt(idx)==arr[i]) {
-					String sql="update ticket set u_id = ? where idx = ?";
-					if(conn!=null) {
-						try {
-							pstmt=conn.prepareStatement(sql);
-							pstmt.setString(1, "NULL");
-							pstmt.setInt(2, Integer.parseInt(idx));
-							pstmt.execute();
-						} catch (SQLException e) {
-							// TODO: handle exception
-							e.printStackTrace();
-						}
-					}
-					ok=1;
-				}
-			}
-			if(ok==-1) {
-				System.out.println("올바르지 않은 입력값입니다.");
-				continue;
-			}
-			break;
-		}
-		
-		return 0;
-		
-	}
-	
+	// 영화 예매 단계 main
 	public int book(String u_id,TicketManager tm,UserManager um,MovieManager mm) {
 		System.out.println("사용자모드>영화예매>날짜선택");
 		int nowdate = showDate();
@@ -595,6 +556,11 @@ public class MovieManager extends DBManager {
 		System.out.println(": "+ date +"\t"+ Mname +"영화"+"\t"+ m_list.get(idx_2).getTime() +"\t"+ m_list.get(idx_2).getTheater_num()+"관"+"\t"+idx_3+"명");
 		String idx_4[]=new String[num];
 		idx_4=selectSeat(num,Integer.parseInt(idx),um,mm); //좌석 정보 배열
+		for(int i=0;i<num;i++) {
+			if(idx_4[i].contentEquals("x")||idx_4[i].contentEquals("X")) {
+				return 0;
+			}
+		}
 		int s_id[]=new int[num];
 		s_id=translation(idx_4,num);
 		
@@ -643,7 +609,96 @@ public class MovieManager extends DBManager {
 		return 1;	
 		
 	}
-	public void SearchMovieByAge(int age) {
+	//예매 확인 및 취소단계
+	public int[] showBooklist(String u_id) {  //로그인된 아이디로 예매한 영화 정보를 보여준다, 예매한 티켓의 idx를 배열로 리턴
+		int size=0;
+		String sql="select * from ticket";
+		if(conn!=null) {
+			try {
+				pstmt=conn.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					if(rs.getString(2).contentEquals(u_id)) {
+						System.out.println("티켓 인덱스 : "+rs.getInt(4)+"\t"+getMovie(rs.getInt(1)).getDate()+"\t"+getMovie(rs.getInt(1)).getName()+"\t\t"+getMovie(rs.getInt(1)).getTime()+"\t"+getMovie(rs.getInt(1)).getTheater_num()+"\t"+"좌석번호"+rs.getInt(3));
+						size++;
+					}
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		int idx[]=new int[size];
+			
+		int i=0;
+		if(conn!=null) {
+			try {
+				pstmt=conn.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					if(rs.getString(2).contentEquals(u_id)) {
+						idx[i]=rs.getInt(4);
+						i++;	
+					}
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+			
+		return idx;
+	}
+	//예매 확인 및 취소 단계 main
+	public int checkBookandCancel(String u_id) {
+		Scanner scan=new Scanner(System.in);
+		System.out.println("사용자모드>예매 확인 및 취소");
+		System.out.println("예매정보");
+		int arr[]=showBooklist(u_id);
+		while(true) {
+			System.out.println("취소하려는 예매내역을 입력해주세요");
+			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+			String idx=scan.nextLine();
+			int ok=-1;
+			if(idx.contentEquals("x")||idx.contentEquals("X")) {
+				return 0;
+			}
+			for(int i=0;i<arr.length;i++) {
+				if(Integer.parseInt(idx)==arr[i]) {
+					String sql="update ticket set u_id = ? where idx = ?";
+					if(conn!=null) {
+						try {
+							pstmt=conn.prepareStatement(sql);
+							pstmt.setString(1, "NULL");
+							pstmt.setInt(2, Integer.parseInt(idx));
+							pstmt.execute();
+						} catch (SQLException e) {
+							// TODO: handle exception
+							e.printStackTrace();
+						}
+					}
+					ok=1;
+				}
+			}
+			if(ok==-1) {
+				System.out.println("올바르지 않은 입력값입니다.");
+				continue;
+			}
+			break;
+		}	
+		return 0;	
+	}
+	//영화 검색 단계
+	public void SearchMovieByAge(int age) {          //연령 제한으로 검색
+		if(age>=7&&age<=11) {
+			age=7;
+		}else if(age>=12&&age<=14) {
+			age=12;
+		}else if(age>=15&&age<=18) {
+			age=15;
+		}else if(age>=19) {
+			age=19;
+		}
 		String sql = "select * from movie where age_limit = ?";
 		if(conn!=null)
 		{
@@ -662,55 +717,109 @@ public class MovieManager extends DBManager {
 			}
 		}
 	}
-	
+	//영화 검색 단계
+	public int SearchMovieByName(String name) {     //영화 제목으로 검색
+		String sql = "select * from movie where name like ?";
+		int cnt=0;
+		if(conn!=null)
+		{
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+name+"%");
+				rs = pstmt.executeQuery();
+				cnt=0;
+				while(rs.next())
+				{
+					cnt++;
+					System.out.println(new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+				} 
+				if(cnt==0)
+					System.out.println("포함된 단어의 영화가 없습니다. 다시 입력해주세요.");
+			} catch (SQLException e) {
+				// TODO: handle exception
+				System.out.println("영화 테이블 읽어오기 실패!");
+				e.printStackTrace();
+			}
+		}
+		return cnt;
+	}
+	//영화 검색 단계 main
 	public int Search() {
 		Scanner scan=new Scanner(System.in);
 		boolean escape=true;
+		String idx;
 		while(escape) {
 			System.out.println("사용자모드>영화검색");
-			System.out.println("1.영화제목 검색 2.연령제한 검색");
-			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
-			String idx=scan.nextLine();
+			while(true) {
+				System.out.println("1.영화제목 검색 2.연령제한 검색");
+				System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+				idx=scan.nextLine();
+				if(idx.contentEquals("x")||idx.contentEquals("X")) {
+					return 0;
+				}else if(Integer.parseInt(idx)<1||Integer.parseInt(idx)>2) {
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				break;
+			}
 			switch(idx) {
 			case "1" : {
 				System.out.println("사용자모드>영화검색>영화제목 검색");
-				System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
-				System.out.println("검색하고자 하는 영화를 입력해주세요");
-				String idx_2=scan.nextLine();
-				if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
+				while(true) {
+					System.out.println("검색하고자 하는 영화를 입력해주세요");
+					System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+					String idx_2=scan.nextLine();
+					if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
+						return 0;
+					}
+					int cnt = SearchMovieByName(idx_2);
+					if(cnt==0) {
+						continue;
+					}
 					break;
 				}
-				
-				SearchMovie(idx_2);
-				System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
-				String idx_3=scan.nextLine();
-				if(idx_3.contentEquals("x")||idx_3.contentEquals("X")) {
-					return 1;
-				}else {
-					break;
+				while(true) {
+					System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
+					String idx_3=scan.nextLine();
+					if(idx_3.contentEquals("x")||idx_3.contentEquals("X")) {
+						return 0;
+					}else {
+						System.out.println("올바르지 않은 입력값입니다");
+						continue;
+					}
 				}
 			}
 	
 			case "2" : {
 				System.out.println("사용자모드>영화검색>연령제한 검색");
-				System.out.println("몇 세 이상 관람 가능 영화를 찾으시나요?");
-				System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
-				String idx_2=scan.nextLine();
-				if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
+				String idx_2;
+				while(true) {
+					System.out.println("몇 세 이상 관람 가능 영화를 찾으시나요? [7세|12세|15세|19세]");
+					System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+					idx_2=scan.nextLine();
+					if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
+						return 0;
+					}else if(Integer.parseInt(idx_2)<=6||Integer.parseInt(idx_2)>=100) {
+						System.out.println("올바르지 않은 입력값입니다.");
+						continue;
+					}
 					break;
 				}
 				SearchMovieByAge(Integer.parseInt(idx_2));
-				System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
-				String idx_3=scan.nextLine();
-				if(idx_3.contentEquals("x")||idx_3.contentEquals("X")) {
-					return 1;
-				}else {
-					break;
+				while(true) {
+					System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
+					String idx_3=scan.nextLine();
+					if(idx_3.contentEquals("x")||idx_3.contentEquals("X")) {
+						return 0;
+					}else {
+						System.out.println("올바르지 않은 입력값입니다");
+						continue;
+					}
 				}
 			}
 			case "x":
 			case "X": {
-				return 1;
+				return 0;
 			}
 			default :{
 				System.out.println("올바르지 않은 입력값입니다.");

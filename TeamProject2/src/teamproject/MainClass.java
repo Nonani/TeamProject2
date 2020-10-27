@@ -16,6 +16,7 @@ public class MainClass {
 		Scanner scan = new Scanner(System.in);
 		// 로그인/회원가입
 		while(true) {
+			um.readDB();
 			System.out.println("1. 로그인 / 2. 회원가입");
 			String idx = scan.nextLine();
 			switch(idx) {
@@ -47,9 +48,9 @@ public class MainClass {
 								else if(__idx.equals("2")) {
 									System.out.println("관리자 모드 > 영화 추가/삭제 > 삭제");
 									mm.delMovie();
-								}
-									
-								else
+								}else if(__idx.equals("x")||__idx.equals("X")) {
+									break;
+								}else
 									System.out.println("잘못된 입력입니다.");
 							}
 								break;
@@ -70,6 +71,7 @@ public class MainClass {
 								
 								else if(__idx.equals("2")) {
 									System.out.println("관리자 모드 > 검색 > 영화 검색");
+				
 									mm.showAll();
 									System.out.print("영화 이름을 입력하세요 : ");
 									String name = scan.nextLine();
@@ -87,6 +89,8 @@ public class MainClass {
 									scan.nextLine();
 									mm.SearchTheater(t_id);
 									
+								}else if(__idx.equals("x")||__idx.equals("X")) {
+									break;
 								}else
 									System.out.println("잘못된 입력입니다.");
 								
