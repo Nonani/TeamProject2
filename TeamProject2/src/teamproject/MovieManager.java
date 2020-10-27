@@ -99,9 +99,27 @@ public class MovieManager extends DBManager {
 				break;
 			System.out.println("올바르지 않은 입력값입니다.");
 		}
-		System.out.print("연령 제한을 입력하세요 : ");
-		age_limit = scan.nextInt();
-		scan.nextLine();
+		
+	
+		while(true) {
+			
+			try {
+				System.out.print("연령 제한을 입력하세요 : ");
+				age_limit = scan.nextInt();
+				
+				
+			} catch (Exception e) {
+				// TODO: handle exception\
+				scan.nextLine();
+				System.out.println("올바르지 않은 입력값입니다.");
+				continue;
+			}
+			scan.nextLine();
+			break;
+				
+		}
+		
+		
 		
 		
 		
@@ -141,28 +159,32 @@ public class MovieManager extends DBManager {
 		showAll();
 		System.out.print("삭제할 영화의 id를 입력하세요 : ");
 		String id = scan.nextLine();
-		if(getMovie(Integer.parseInt(id))!=null) {
-			if(getMovie(Integer.parseInt(id)).getTime().equals("00000000"))
-			{
-				System.out.println("올바르지 않은 입력값입니다.");
-				return;
-			}
-			getMovie(Integer.parseInt(id)).setTime("00000000");
-			String sql = "update movie set time = ? where id = ?";
-	        try {
-	        	pstmt = conn.prepareStatement(sql);
+		
+		
+		try {
+			if(getMovie(Integer.parseInt(id))!=null) {
+				if(getMovie(Integer.parseInt(id)).getTime().equals("00000000"))
+				{
+					System.out.println("올바르지 않은 입력값입니다.");
+					return;
+				}
+				getMovie(Integer.parseInt(id)).setTime("00000000");
+				String sql = "update movie set time = ? where id = ?";
+				pstmt = conn.prepareStatement(sql);
 	        	pstmt.setString(1, "00000000");
 				pstmt.setInt(2, Integer.parseInt(id));
 	            pstmt.execute();
+		        
+			}else {
+				System.out.println("올바르지 않은 입력값입니다.");
+				return;
+			}
 	          
-	        } catch (SQLException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	        }
-		}else {
-			System.out.println("올바르지 않은 입력값입니다.");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+        	System.out.println("올바르지 않은 입력값입니다.");
 			return;
-		}
+        }
 	}
 	
 	private Boolean checkTime(int _date, String _time, int theater) {
@@ -212,10 +234,13 @@ public class MovieManager extends DBManager {
 				return false;
 			}else if(today_date==_date){
 				if(startTime - todayTime<0) {
-					System.out.println("test");
 					return false;
 				}
 			}
+			
+			if(startTime >= endTime)
+				return false;
+			System.out.println(startTime - endTime);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 //			System.out.println("parse오류");
@@ -227,13 +252,14 @@ public class MovieManager extends DBManager {
 			if(m.getTime().equals("00000000"))
 				continue;
 			
-			if(m.getTheater_num()==theater&&m.getDate()==_date) {
+			if(m.getTheater_num()==theater&&m.getDate()==_date) {	//_time = 리스트 내의 영화 시간, time = 등록할 영화 시간
 				try {
 					Date _start = dateFormat.parse(m.getTime().substring(0,4));
 					Date _end = dateFormat.parse(m.getTime().substring(4));
 					long _startTime = _start.getTime();
 					long _endTime = _end.getTime();
-					if(_startTime <= startTime && endTime <= _endTime)
+					
+					if(_startTime <= startTime && endTime <= _endTime )
 						return false;
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
