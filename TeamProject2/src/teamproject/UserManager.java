@@ -3,6 +3,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class UserManager extends DBManager {
@@ -36,6 +38,7 @@ public class UserManager extends DBManager {
 			}
 		}
 	}
+	//로그인 단계
 	public int checkId() {
 		System.out.println("아이디를 입력해주세요.");
 		Scanner scan=new Scanner(System.in);
@@ -51,7 +54,7 @@ public class UserManager extends DBManager {
 		}
 		return ok;
 	}
-	
+	//로그인 단계
 	public int checkPwd(int num) {
 		System.out.println("비밀번호를 입력해주세요.");
 		Scanner scan=new Scanner(System.in);
@@ -64,36 +67,122 @@ public class UserManager extends DBManager {
 			return 3;
 		
 	}
-	
-	public void registerUser() {
+	//회원가입 단계
+	public boolean checkingSpecialChar(String str) {
+		 if(!str.matches("[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝]*")){
+			 System.out.println("특수문자있음");
+			 return true;
+		 }else{
+			 System.out.println("특수문자없음");
+			 return false;
+		}
+		
+	}
+	//회원가입 main
+	public void registerUser() {  
 		while(true) {
-			int ok=-1;
+			int ok=1;
 			Scanner scan=new Scanner(System.in);
-			System.out.println("아이디를 입력하세요");
-			String Id=scan.nextLine();
+			String Id ,Pwd, name, phone, age;
+			while(true) {
+				System.out.println("아이디를 입력하세요");
+				Id=scan.nextLine();
+				
+				if(checkingSpecialChar(Id)==true) {  //특수문자 포함여부 확인
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}else if(Id.length()<8||Id.length()>15) {    //글자수 범위 예외처리
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				break;
+			}
 			for(int i=0;i<u_list.size();i++) {
 				if(Id.contentEquals(u_list.get(i).getId())){
 					System.out.println("아이디 중복! 다른 아이디를 입력하세요");
-					ok=1;
+					ok=-1;
 					break;
 				}
 			}
-			
-			if(ok==1) {
+			if(ok==-1) {
 				continue;
 			}
-			System.out.println("비밀번호를 입력하세요");
-			String Pwd=scan.nextLine();
+			while(true) {
+				System.out.println("비밀번호를 입력하세요");
+				Pwd=scan.nextLine();
+				if(checkingSpecialChar(Pwd)==true) {
+					ok=-1;
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}else if(Pwd.length()<8||Pwd.length()>15) {
+					ok=-1;
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				break;
+			}
 			System.out.println("비밀번호 확인을 위해 다시 입력해주세요");
 			String Pwd2=scan.nextLine();
 			if(!Pwd.contentEquals(Pwd2)) {
+				ok=-1;
 				System.out.println("비밀번호가 일치하지 않습니다.");
 				continue;
 			}
-			System.out.println("이름 전화번호 나이를 순서대로 입력해주세요");
-			String name=scan.nextLine();
-			String phone=scan.nextLine();
-			String age=scan.nextLine();
+			while(true) {
+				System.out.println("이름을 입력해주세요");
+				name=scan.nextLine();
+				if(name.length()<2||name.length()>30||checkingSpecialChar(name)==true) {
+					ok=-1;
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				break;
+			}
+			String regExp="^[0-9]+$";     //숫자만 허용하는 정규 표현식
+			while(true) {
+				System.out.println("전화번호를 입력해주세요");
+				phone=scan.nextLine();
+				if(phone.length()<10||phone.length()>11) {
+					ok=-1;
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				if(phone.matches(regExp)) {
+					ok=1;
+				}else {
+					ok=-1;
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				for(int i=0;i<u_list.size();i++) {
+					if(phone.contentEquals(u_list.get(i).getPhone())){
+						System.out.println("전화번호 중복! 다른 전화번호를 입력하세요");
+						ok=-1;
+						break;
+					}
+				}
+				if(ok==-1) {
+					continue;
+				}
+				break;
+			}
+			while(true) {
+				System.out.println("나이를 입력해주세요");
+				age=scan.nextLine();
+				if(age.length()<0||age.length()>3) {
+					ok=-1;
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				if(age.matches(regExp)) {
+					ok=1;
+				}else {
+					ok=-1;
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+				break;
+			}
 			String sql="insert into user values(?,?,?,?,?)";
 			if(conn!=null) {
 				try {
@@ -109,7 +198,6 @@ public class UserManager extends DBManager {
 					e.printStackTrace();
 				}
 			}
-			showAll();
 			break;
 		}
 	}

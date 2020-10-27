@@ -12,10 +12,10 @@ public class MainClass {
 //		tm.showAll();
 //		um.showAll();
 //		mm.showAll();
-		
 		Scanner scan = new Scanner(System.in);
 		// 로그인/회원가입
 		while(true) {
+			um.readDB();
 			System.out.println("1. 로그인 / 2. 회원가입");
 			String idx = scan.nextLine();
 			switch(idx) {
