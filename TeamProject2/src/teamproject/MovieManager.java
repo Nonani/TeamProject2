@@ -792,6 +792,9 @@ public class MovieManager extends DBManager {
 				idx=scan.nextLine();
 				if(idx.contentEquals("x")||idx.contentEquals("X")) {
 					return 0;
+				}else if(idx.contentEquals("")) {
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
 				}else if(Integer.parseInt(idx)<1||Integer.parseInt(idx)>2) {
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
