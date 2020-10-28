@@ -186,7 +186,6 @@ public class MovieManager extends DBManager {
 			return;
         }
 	}
-	
 	private Boolean checkTime(int _date, String _time, int theater) {
 		
 		Date today = new Date ();
