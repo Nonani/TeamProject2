@@ -52,7 +52,7 @@ public class MainClass {
 								}else if(__idx.equals("x")||__idx.equals("X")) {
 									break;
 								}else
-									System.out.println("잘못된 입력입니다.");
+									System.out.println("올바르지 않은 입력값입니다.");
 							}
 								break;
 							case "2":
@@ -86,14 +86,24 @@ public class MainClass {
 		
 									
 									System.out.print("검색할 상영관의 번호를 입력하세요 : ");
-									int t_id = scan.nextInt();
-									scan.nextLine();
-									mm.SearchTheater(t_id);
+									try {
+										int t_id = scan.nextInt();
+										scan.nextLine();
+										mm.SearchTheater(t_id);
+									} catch (Exception e) {
+										// TODO: handle exception
+										scan.nextLine();
+										System.out.println("올바르지 않은 입력값입니다.");
+										
+									}
+									
+									
+									
 									
 								}else if(__idx.equals("x")||__idx.equals("X")) {
 									break;
 								}else
-									System.out.println("잘못된 입력입니다.");
+									System.out.println("올바르지 않은 입력값입니다.");
 								
 							}
 								break;
