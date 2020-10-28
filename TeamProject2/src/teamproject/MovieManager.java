@@ -475,6 +475,29 @@ public class MovieManager extends DBManager {
 		}
 	}
 	//영화 예매단계
+	public boolean checkingOverlap(String idx,int m_id) {            //입력받은 좌석의 값이 기존에 예매되어 있는 좌석이랑 중복이 되는지 체크하는 함수
+		String[] str=new String[1];
+		int[] s_id=new int[1]; 
+		str[0]=idx;
+		s_id=translation(str,1);
+		String sql="select * from ticket";
+		if(conn!=null) {
+			try {
+				pstmt=conn.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					if(rs.getInt(3)==s_id[0]&&rs.getInt(1)==m_id) {
+						return true;
+					}
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	//영화 예매단계
 	public String[] selectSeat(int num,int id,UserManager um,MovieManager mm) {  //좌석을 선택받아 문자열 배열에 저장한다
 		Scanner scan=new Scanner(System.in);
 		showSeat(id,um,mm);
@@ -486,6 +509,12 @@ public class MovieManager extends DBManager {
 				idx[i]=scan.nextLine();
 				idx[i]=idx[i].replaceAll("\\p{Z}","");
 				idx[i]=idx[i].toUpperCase();
+				if(i>=1) {
+					if(idx[i].contentEquals(idx[i-1])) {
+						System.out.println("이미 예매된 좌석입니다. 다시 입력해주세요 ");
+						continue;
+					}
+				}
 				char[] ch=idx[i].toCharArray();
 				if(idx[i].contentEquals("x")||idx[i].contentEquals("X")) {
 					return idx;
@@ -496,10 +525,14 @@ public class MovieManager extends DBManager {
 				}else if(ch[0]<65||ch[0]>72||ch[1]<49||ch[1]>56) {
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
+				}else if(checkingOverlap(idx[i],id)) {
+					System.out.println("이미 예매된 좌석입니다. 다시 입력해주세요");
+					continue;
 				}
 				break;
 			}
 		}
+		
 		return idx;
 	}
 	//영화 예매단계 
