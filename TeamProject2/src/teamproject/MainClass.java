@@ -18,6 +18,7 @@ public class MainClass {
 		while(true) {
 			um.readDB();
 			System.out.println("1. 로그인 / 2. 회원가입");
+			System.out.print("input : ");
 			String idx = scan.nextLine();
 			switch(idx) {
 			case "1":{	//1: 로그인
@@ -114,7 +115,8 @@ public class MainClass {
 						Boolean escape = true;
 						while(escape) {
 							TicketManager tm_1=new TicketManager(um,mm);
-							System.out.println("1: 영화 예매\t2: 영화 확인 및 취소\t3: 영화검색\t4: 로그아웃");
+							System.out.println("1: 영화 예매\\ 2: 영화 확인 및 취소\\ 3: 영화검색\\ 4: 로그아웃");
+							System.out.print("input : ");
 							String idx_1 = scan.nextLine();
 							switch(idx_1) {
 							case "1":{
