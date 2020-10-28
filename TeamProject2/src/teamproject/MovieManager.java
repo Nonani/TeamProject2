@@ -417,10 +417,17 @@ public class MovieManager extends DBManager {
 	public String selectNumOfPersons() {           //영화 예매 인원을 받는다
 		Scanner scan=new Scanner(System.in);
 		String idx;
+		String regExp="^[0-9]+$";
 		while(true) {
 			System.out.println("몇 사람이 관람하시겠습니까?");
 			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 			idx=scan.nextLine();
+			if(idx.matches(regExp)) {
+				
+			}else {
+				System.out.println("올바르지 않은 입력값입니다.");
+				continue;
+			}
 			if(Integer.parseInt(idx)<1||Integer.parseInt(idx)>64) {
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
@@ -480,10 +487,13 @@ public class MovieManager extends DBManager {
 				idx[i]=idx[i].replaceAll("\\p{Z}","");
 				idx[i]=idx[i].toUpperCase();
 				char[] ch=idx[i].toCharArray();
+				if(idx[i].contentEquals("x")||idx[i].contentEquals("X")) {
+					return idx;
+				}
 				if(idx[i].length()!=2) {
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
-				}else if(ch[0]<65||ch[0]>72||ch[1]<1||ch[1]>8) {
+				}else if(ch[0]<65||ch[0]>72||ch[1]<49||ch[1]>56) {
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
 				}
@@ -738,6 +748,11 @@ public class MovieManager extends DBManager {
 	}
 	//영화 검색 단계
 	public int SearchMovieByName(String name) {     //영화 제목으로 검색
+		Calendar cal=Calendar.getInstance();
+		int year=cal.get(Calendar.YEAR);
+		int month=cal.get(Calendar.MONTH)+1;
+		int day=cal.get(Calendar.DAY_OF_MONTH);
+		int nowdate=year*10000+month*100+day;
 		String sql = "select * from movie where name like ?";
 		int cnt=0;
 		if(conn!=null)
@@ -749,8 +764,10 @@ public class MovieManager extends DBManager {
 				cnt=0;
 				while(rs.next())
 				{
-					cnt++;
-					System.out.println(new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+					if(nowdate<=rs.getInt(7)) {
+						cnt++;
+						System.out.println(new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+					}
 				} 
 				if(cnt==0)
 					System.out.println("포함된 단어의 영화가 없습니다. 다시 입력해주세요.");
