@@ -66,10 +66,10 @@ public class UserManager extends DBManager {
 	//회원가입 단계
 	public boolean checkingSpecialChar(String str) {
 		 if(!str.matches("[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝]*")){
-			 System.out.println("특수문자있음");
+//확인용			 System.out.println("특수문자있음");
 			 return true;
 		 }else{
-			 System.out.println("특수문자없음");
+//확인용			 System.out.println("특수문자없음");
 			 return false;
 		}
 		
@@ -77,10 +77,10 @@ public class UserManager extends DBManager {
 	//회원가입 단계
 		public boolean checkingisEng(String str) {
 			 if(!str.matches("[0-9|a-z|A-Z|]*")){
-				 System.out.println("한글 또는 특수문자있음");
+//확인용				 System.out.println("한글 또는 특수문자있음");
 				 return true;
 			 }else{
-				 System.out.println("조건에 맞음");
+//확인용				 System.out.println("조건에 맞음");
 				 return false;
 			}
 			
