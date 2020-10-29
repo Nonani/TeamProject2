@@ -102,8 +102,7 @@ public class MovieManager extends DBManager {
 						break;
 					System.out.println("올바르지 않은 입력값입니다.");
 				} catch (Exception e) {
-					// TODO: handle exception\
-					scan.nextLine();
+					// TODO: handle exception
 					System.out.println("올바르지 않은 입력값입니다.");
 				}
 			}
