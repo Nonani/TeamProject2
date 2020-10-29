@@ -192,7 +192,7 @@ public class MovieManager extends DBManager {
 	        	pstmt.setString(1, "00000000");
 				pstmt.setInt(2, Integer.parseInt(id));
 	            pstmt.execute();
-		        
+		        System.out.println("영화가 삭제되었습니다.");
 			}else {
 				System.out.println("올바르지 않은 입력값입니다.");
 				return;
