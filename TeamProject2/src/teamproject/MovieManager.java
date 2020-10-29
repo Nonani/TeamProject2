@@ -869,7 +869,6 @@ public class MovieManager extends DBManager {
 	//예매 확인 및 취소 단계 main
 	public int checkBookandCancel(String u_id) {
 		Scanner scan=new Scanner(System.in);
-		System.out.println("사용자모드>예매 확인 및 취소");
 		System.out.println("예매정보");
 		int arr[]=showBooklist(u_id);
 		if(arr[0]==-1) {
