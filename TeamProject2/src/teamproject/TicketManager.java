@@ -43,7 +43,7 @@ public class TicketManager extends DBManager {
 	}
 	
 	public void SearchUser(String id) {
-		System.out.println("관리자 모드 > 검색 > 사용자 검색 > 예매취소");
+		
 		User u = um.getUser(id);
 		
 		if(u==null) {
@@ -60,7 +60,7 @@ public class TicketManager extends DBManager {
 			System.out.println("영화 이력이 없습니다..");
 			return;
 		}else {
-			
+			System.out.println("관리자 모드 > 검색 > 사용자 검색 > 예매취소");
 			mm.checkBookandCancel(id);
 		}
 	}
