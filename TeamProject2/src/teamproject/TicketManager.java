@@ -49,10 +49,9 @@ public class TicketManager extends DBManager {
 			System.out.println("존재하지 않는 유저 정보입니다.");
 			return;
 		}
-		
 		int cnt = 0;
 		for(int i=0;i<t_list.size();i++) {
-			if(t_list.get(i).getUser().equals(u)) {
+			if(t_list.get(i).getUser().equals(u)&&!(t_list.get(i).getUser().equals("NULL"))) {
 				cnt++;
 			}
 		}
@@ -60,11 +59,8 @@ public class TicketManager extends DBManager {
 			System.out.println("영화 예매 내역이 존재하지 않습니다.");
 			return;
 		}else {
-			for(int i=0;i<t_list.size();i++) {
-				if(t_list.get(i).getUser().equals(u)) {
-					System.out.println(t_list.get(i).getMovie());
-				}
-			}
+			
+			mm.checkBookandCancel(id);
 		}
 	}
 	
