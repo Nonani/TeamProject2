@@ -96,8 +96,8 @@ public class MovieManager extends DBManager {
 				try {
 					
 					System.out.print("상영관 번호를 입력하세요 : ");
-					theater = scan.nextInt();
-					scan.nextLine();
+					String _t = scan.nextLine();
+					theater = Integer.parseInt(_t);
 					if(theater<100&&theater>0)
 						break;
 					System.out.println("올바르지 않은 입력값입니다.");

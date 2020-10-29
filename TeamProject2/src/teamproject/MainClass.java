@@ -88,11 +88,9 @@ public class MainClass {
 									System.out.print("검색할 상영관의 번호를 입력하세요 : ");
 									try {
 										String t_id = scan.nextLine();
-										scan.nextLine();
 										mm.SearchTheater(Integer.parseInt(t_id));
 									} catch (Exception e) {
 										// TODO: handle exception
-										scan.nextLine();
 										System.out.println("올바르지 않은 입력값입니다.");
 										
 									}
