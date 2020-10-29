@@ -474,7 +474,7 @@ public class MovieManager extends DBManager {
 			if(Integer.parseInt(date)<nowdate) {
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
-			}else if(year!=2020||month>12||month<1||day<1||day>31) {
+			}else if(year<2020||month>12||month<1||day<1||day>31) {
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
 			}else if(checkDate(month,day)) {
@@ -564,7 +564,8 @@ public class MovieManager extends DBManager {
 		}
 		return idx;
 	}
-	public int checkingBookNum(int m_id) {
+	//영화 예매단계
+	public int checkingBookNum(int m_id) {             //몇좌석이 예매되었는지 return
 		int cnt=0;
 		String sql="select * from ticket";
 		if(conn!=null) {
