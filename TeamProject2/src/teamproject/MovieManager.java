@@ -559,6 +559,10 @@ public class MovieManager extends DBManager {
 		int Bnum=checkingBookNum(m_id);
 		int emptyseat=64-Bnum;
 		System.out.println("남은 좌석 수 : "+emptyseat);
+		if(emptyseat==0) {
+			System.out.println("남은 좌석이 없어 예매를 종료합니다.");
+			return "x";
+		}
 		while(true) {
 			System.out.println("몇 사람이 관람하시겠습니까?");
 			System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
