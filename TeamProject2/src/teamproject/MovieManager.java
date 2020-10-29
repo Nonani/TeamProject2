@@ -392,10 +392,22 @@ public class MovieManager extends DBManager {
 		return ok;
 	}
 	//영화 예매단계
+	public boolean checkTime(int start) {
+		Calendar cal=Calendar.getInstance();
+		int nowhour=cal.get(Calendar.HOUR_OF_DAY);
+		int nowmin=cal.get(Calendar.MINUTE);
+		if(start/100<=nowhour&&start%100<nowmin) {
+			return false;
+		}else
+			return true;
+	}
+	//영화 예매단계
 	public void showSelectedMovie(int date) {          //선택된 날짜의 영화 리스트를 보여준다
+		
+		
 		System.out.println("<영화 리스트>");
 		for(int i=0;i<m_list.size();i++) {
-			if(!m_list.get(i).getTime().equals("00000000")&&m_list.get(i).getDate()==date)
+			if(!m_list.get(i).getTime().equals("00000000")&&m_list.get(i).getDate()==date&&checkTime(Integer.parseInt(m_list.get(i).getTime())/10000))
 				System.out.println(m_list.get(i));
 		}
 	}
