@@ -107,9 +107,6 @@ public class MainClass {
 								
 							}
 								break;
-								
-							case "x":
-							case "X":
 							case "3":
 								excape = false;
 								break;
