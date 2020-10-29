@@ -89,7 +89,7 @@ public class MovieManager extends DBManager {
 				theater = scan.nextInt();
 				scan.nextLine();
 				
-				if(checkTime(date, time, theater))
+				if(checkTime(date, time, theater)&&theater<100&&theater>0)
 					break;
 				System.out.println("올바르지 않은 입력값입니다.");
 			} catch (Exception e) {
