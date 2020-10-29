@@ -128,10 +128,11 @@ public class MainClass {
 							String idx_1 = scan.nextLine();
 							switch(idx_1) {
 							case "1":{
-								int a = mm.book(um.u_list.get(numI).getId(),tm_1,um,mm);
+								int a = mm.book(um.u_list.get(numI).getId(),tm_1,um,mm,um.u_list.get(numI).getAge());
 							}
 							break;
 							case "2":{ //영화 취소 단계 예매 취소시 ticket DB에 u_id가 NULL로 바뀐다.
+								System.out.println("사용자모드>영화 확인 및 취소");
 								int b = mm.checkBookandCancel(um.u_list.get(numI).getId());
 							}
 							break;
