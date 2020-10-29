@@ -105,7 +105,7 @@ public class MovieManager extends DBManager {
 		while(true) {
 			System.out.print("¿µÈ­ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä : ");
 			name = scan.nextLine();
-			if(name.length()<=30)
+			if(name.length()<=30&&isStringType(name))
 				if(!name.replaceAll(" ", "").equals(""))
 				break;
 			System.out.println("¿Ã¹Ù¸£Áö ¾ÊÀº ÀÔ·Â°ªÀÔ´Ï´Ù.");
@@ -114,7 +114,7 @@ public class MovieManager extends DBManager {
 		while(true) {
 			System.out.print("°¨µ¶À» ÀÔ·ÂÇÏ¼¼¿ä : ");
 			director = scan.nextLine();
-			if(director.length()<=30)
+			if(director.length()<=30&&isStringType(director))
 				if(!director.replaceAll(" ", "").equals(""))
 				break;
 			System.out.println("¿Ã¹Ù¸£Áö ¾ÊÀº ÀÔ·Â°ªÀÔ´Ï´Ù.");
@@ -1213,8 +1213,8 @@ public class MovieManager extends DBManager {
 	public static boolean isPasswordType(String word) {	//ºñ¹Ð¹øÈ£ Á¶°Ç¿¡ ¸¸Á·ÇÏ´Â ¹®ÀÚ¿­ÀÎÁö ÆÇº°ÇÏ´Â ÇÔ¼ö
         return Pattern.matches("^[0-9a-zA-Z]*$", word);
     }
-	public static boolean isNameType(String word) {	//ÀÌ¸§ Á¶°Ç¿¡ ¸¸Á·ÇÏ´Â ¹®ÀÚ¿­ÀÎÁö ÆÇº°ÇÏ´Â ÇÔ¼ö
-        return Pattern.matches("^[a-zA-Z°¡-ÆR]*$", word);
+	public static boolean isStringType(String word) {	//ÀÌ¸§ Á¶°Ç¿¡ ¸¸Á·ÇÏ´Â ¹®ÀÚ¿­ÀÎÁö ÆÇº°ÇÏ´Â ÇÔ¼ö
+        return Pattern.matches("^[0-9a-zA-Z°¡-ÆR]*$", word);
     }
 }
 
