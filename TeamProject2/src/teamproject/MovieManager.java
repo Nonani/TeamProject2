@@ -43,7 +43,7 @@ public class MovieManager extends DBManager {
 				e.printStackTrace();
 			}
 		}
-	}
+	}//test
 	
 	@Override
 	public void showAll() {
