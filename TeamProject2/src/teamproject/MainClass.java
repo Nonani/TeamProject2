@@ -108,6 +108,7 @@ public class MainClass {
 							}
 								break;
 							case "3":
+								System.out.println("로그아웃 성공");
 								excape = false;
 								break;
 							default:
