@@ -1153,11 +1153,11 @@ public class MovieManager extends DBManager {
 					}else if(isInteger(idx_2)) {
 						//문자열로만 이루어짐
 					}else {
-						System.out.println("올바르지 않은 입력값입니다.");
+						System.out.println("올바르지 않은 입력값입니다.1");
 						continue;
 					}
-					if(Integer.parseInt(idx_2)!=0||Integer.parseInt(idx_2)!=7||Integer.parseInt(idx_2)!=12||Integer.parseInt(idx_2)!=15||Integer.parseInt(idx_2)!=19) {
-						System.out.println("올바르지 않은 입력값입니다.");
+					if(Integer.parseInt(idx_2)!=0&&Integer.parseInt(idx_2)!=7&&Integer.parseInt(idx_2)!=12&&Integer.parseInt(idx_2)!=15&&Integer.parseInt(idx_2)!=19) {
+						System.out.println("올바르지 않은 입력값입니다.2");
 						continue;
 					}
 					break;
@@ -1170,7 +1170,7 @@ public class MovieManager extends DBManager {
 					if(idx_3.contentEquals("x")||idx_3.contentEquals("X")) {
 						return 0;
 					}else {
-						System.out.println("올바르지 않은 입력값입니다");
+						System.out.println("올바르지 않은 입력값입니다.");
 						continue;
 					}
 				}

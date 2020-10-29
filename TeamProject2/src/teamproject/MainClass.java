@@ -123,7 +123,7 @@ public class MainClass {
 						Boolean escape = true;
 						while(escape) {
 							TicketManager tm_1=new TicketManager(um,mm);
-							System.out.println("1: 영화 예매\\ 2: 영화 확인 및 취소\\ 3: 영화검색\\ 4: 로그아웃");
+							System.out.println("1: 영화 예매 2: 영화 확인 및 취소 3: 영화검색 4: 로그아웃");
 							System.out.print("input : ");
 							String idx_1 = scan.nextLine();
 							switch(idx_1) {
