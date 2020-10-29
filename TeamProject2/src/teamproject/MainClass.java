@@ -87,9 +87,9 @@ public class MainClass {
 									
 									System.out.print("검색할 상영관의 번호를 입력하세요 : ");
 									try {
-										int t_id = scan.nextInt();
+										String t_id = scan.nextLine();
 										scan.nextLine();
-										mm.SearchTheater(t_id);
+										mm.SearchTheater(Integer.parseInt(t_id));
 									} catch (Exception e) {
 										// TODO: handle exception
 										scan.nextLine();

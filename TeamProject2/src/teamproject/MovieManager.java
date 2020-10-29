@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import org.graalvm.compiler.nodes.calc.IsNullNode;
+
 
 
 public class MovieManager extends DBManager {
@@ -59,46 +61,61 @@ public class MovieManager extends DBManager {
 		Scanner scan = new Scanner(System.in);
 		String name, director, time, _date;
 		int age_limit, theater, date=0;
-		while(true) {
-			
-			
-			try {
-				System.out.print("상영 날짜를 입력하세요 : ");
-				_date = scan.nextLine();
-				
-				_date = _date.replaceAll(" ", "").replaceAll("-", "");
-				if(_date.length()!=8) {
+		
+		
+		while(true){
+			while(true) {
+				try {
+					System.out.print("상영 날짜를 입력하세요 : ");
+					_date = scan.nextLine();
+					_date = _date.replaceAll(" ", "").replaceAll("-", "");
+					if(isInteger(_date)) {
+						date = Integer.parseInt(_date);
+						break;
+					}
 					System.out.println("올바르지 않은 입력값입니다.");
-					continue;
-				}
-				date = Integer.parseInt(_date);
-			} catch (Exception e) {
-				// TODO: handle exception\
-				
-				System.out.println("올바르지 않은 입력값입니다.");
-			}
-			try {
-				System.out.print("상영시간을 입력하세요 : ");
-				time = scan.nextLine();
-				time = time.replaceAll(" ", "").replace("-", "");
-				if(time.length()!=8) {
+				} catch (Exception e) {
+					// TODO: handle exception
 					System.out.println("올바르지 않은 입력값입니다.");
-					continue;
 				}
-				System.out.print("상영관 번호를 입력하세요 : ");
-				theater = scan.nextInt();
-				scan.nextLine();
-				
-				if(checkTime(date, time, theater)&&theater<100&&theater>0)
-					break;
-				System.out.println("올바르지 않은 입력값입니다.");
-			} catch (Exception e) {
-				// TODO: handle exception\
-				scan.nextLine();
-				System.out.println("올바르지 않은 입력값입니다.");
 			}
 				
+			
+			while(true) {
+					System.out.print("상영시간을 입력하세요 : ");
+					time = scan.nextLine();
+					time = time.replaceAll(" ", "").replace("-", "");
+					if(isInteger(time)) {
+						
+						break;
+					}
+					System.out.println("올바르지 않은 입력값입니다.");
+			}
+				
+			while(true) {
+				try {
+					
+					System.out.print("상영관 번호를 입력하세요 : ");
+					theater = scan.nextInt();
+					scan.nextLine();
+					if(theater<100&&theater>0)
+						break;
+					System.out.println("올바르지 않은 입력값입니다.");
+				} catch (Exception e) {
+					// TODO: handle exception\
+					scan.nextLine();
+					System.out.println("올바르지 않은 입력값입니다.");
+				}
+			}
+			if(checkTime(date, time, theater))
+				break;
+			else
+				System.out.println("올바르지 않은 입력값입니다.");
 		}
+		
+		
+			
+		
 		
 		
 		
