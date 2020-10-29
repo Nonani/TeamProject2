@@ -200,6 +200,7 @@ public class UserManager extends DBManager {
 					pstmt.setString(4, phone);
 					pstmt.setInt(5, Integer.parseInt(age));
 					pstmt.execute();
+					System.out.println("회원가입 성공");
 				} catch(SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

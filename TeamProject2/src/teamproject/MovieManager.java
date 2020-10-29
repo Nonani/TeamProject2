@@ -61,6 +61,7 @@ public class MovieManager extends DBManager {
 		int age_limit, theater, date=0;
 		while(true) {
 			
+			
 			try {
 				System.out.print("상영 날짜를 입력하세요 : ");
 				_date = scan.nextLine();
