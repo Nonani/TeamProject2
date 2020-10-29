@@ -93,6 +93,7 @@ public class MovieManager extends DBManager {
 			System.out.print("영화 이름을 입력하세요 : ");
 			name = scan.nextLine();
 			if(name.length()<=30)
+				if(!name.replaceAll(" ", "").equals(""))
 				break;
 			System.out.println("올바르지 않은 입력값입니다.");
 		}
@@ -101,6 +102,7 @@ public class MovieManager extends DBManager {
 			System.out.print("감독을 입력하세요 : ");
 			director = scan.nextLine();
 			if(director.length()<=30)
+				if(!director.replaceAll(" ", "").equals(""))
 				break;
 			System.out.println("올바르지 않은 입력값입니다.");
 		}

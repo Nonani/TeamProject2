@@ -38,7 +38,7 @@ public class MainClass {
 							case "1":
 							{
 								System.out.println("관리자 모드 > 영화 추가/삭제");
-								System.out.println("1: 영화 추가\t2: 영화 삭제\n[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
+								System.out.println("1: 영화 추가\t2: 영화 삭제\n[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 								String __idx = scan.nextLine();
 								if(__idx.equals("1"))
 								{
