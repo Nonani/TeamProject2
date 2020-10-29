@@ -401,57 +401,16 @@ public class MovieManager extends DBManager {
 		return result;
 	}
 	//영화 예매단계
-	public boolean checkDate(int month,int day) {
-		switch(month) {
-		case 1:
-			if(day>31) {
-				return true;
-			}
-			else break;
-		case 2:
-			if(day>28)
-				return true;
-			else break;
-		case 3:
-			if(day>31)
-				return true;
-			else break;
-		case 4:
-			if(day>30)
-				return true;
-			else break;
-		case 5:
-			if(day>31)
-				return true;
-			else break;
-		case 6:
-			if(day>30)
-				return true;
-			else break;
-		case 7:
-			if(day>31)
-				return true;
-			else break;
-		case 8:
-			if(day>31)
-				return true;
-			else break;
-		case 9:
-			if(day>30)
-				return true;
-			else break;
-		case 10:
-			if(day>31)
-				return true;
-			else break;
-		case 11:
-			if(day>30)
-				return true;
-			else break;
-		case 12:
-			if(day>31)
-				return true;
-			else break;
+	public boolean checkDate(int year,int month,int day) {
+		int _date=year*10000+month*100+day;
+		SimpleDateFormat testdateFormat = new SimpleDateFormat("yyyyMMdd");
+		testdateFormat.setLenient(false);
+		try {
+			Date test_Day = testdateFormat.parse(Integer.toString(_date));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+			return true;
 		}
 		return false;
 	}
@@ -485,7 +444,7 @@ public class MovieManager extends DBManager {
 			}else if(year<2020||month>12||month<1||day<1||day>31) {
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
-			}else if(checkDate(month,day)) {
+			}else if(checkDate(year,month,day)) {
 				System.out.println("존재하지 않는 날짜입니다.");
 				continue;
 			}else if(checkDate(Integer.parseInt(date))==-1) {
@@ -600,6 +559,10 @@ public class MovieManager extends DBManager {
 		int Bnum=checkingBookNum(m_id);
 		int emptyseat=64-Bnum;
 		System.out.println("남은 좌석 수 : "+emptyseat);
+		if(emptyseat==0) {
+			System.out.println("남은 좌석이 없어 예매를 종료합니다.");
+			return "x";
+		}
 		while(true) {
 			System.out.println("몇 사람이 관람하시겠습니까?");
 			System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
@@ -617,7 +580,7 @@ public class MovieManager extends DBManager {
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
 			}else if(Integer.parseInt(idx)>emptyseat){
-				System.out.println("남은 좌석을 초과 하였습니다.");
+				System.out.println("해당 인원수가 잔여 좌석보다 많습니다.");
 				continue;
 			}else
 				break;

@@ -37,6 +37,7 @@ public class UserManager extends DBManager {
 	//로그인 단계
 	public int checkId() {
 		System.out.println("아이디를 입력해주세요.");
+		System.out.print("input : ");
 		Scanner scan=new Scanner(System.in);
 		String Id=scan.nextLine();
 		int ok=-1;
@@ -53,6 +54,7 @@ public class UserManager extends DBManager {
 	//로그인 단계
 	public int checkPwd(int num) {
 		System.out.println("비밀번호를 입력해주세요.");
+		System.out.print("input : ");
 		Scanner scan=new Scanner(System.in);
 		String Pwd=scan.nextLine();
 		if(num==0&&Pwd.equals("admin"))	//admin인 경우 0
@@ -93,6 +95,7 @@ public class UserManager extends DBManager {
 			String Id ,Pwd, name, phone, age;
 			while(true) {
 				System.out.println("아이디를 입력하세요");
+				System.out.print("input : ");
 				Id=scan.nextLine();
 				
 				if(checkingisEng(Id)==true) {  //특수문자 포함여부 확인
@@ -116,6 +119,7 @@ public class UserManager extends DBManager {
 			}
 			while(true) {
 				System.out.println("비밀번호를 입력하세요");
+				System.out.print("input : ");
 				Pwd=scan.nextLine();
 				if(checkingisEng(Pwd)==true) {
 					ok=-1;
@@ -129,6 +133,7 @@ public class UserManager extends DBManager {
 				break;
 			}
 			System.out.println("비밀번호 확인을 위해 다시 입력해주세요");
+			System.out.print("input : ");
 			String Pwd2=scan.nextLine();
 			if(!Pwd.contentEquals(Pwd2)) {
 				ok=-1;
@@ -137,6 +142,7 @@ public class UserManager extends DBManager {
 			}
 			while(true) {
 				System.out.println("이름을 입력해주세요");
+				System.out.print("input : ");
 				name=scan.nextLine();
 				if(name.length()<2||name.length()>30||checkingSpecialChar(name)==true) {
 					ok=-1;
@@ -148,6 +154,7 @@ public class UserManager extends DBManager {
 			String regExp="^[0-9]+$";     //숫자만 허용하는 정규 표현식
 			while(true) {
 				System.out.println("전화번호를 입력해주세요");
+				System.out.print("input : ");
 				phone=scan.nextLine();
 				if(phone.length()<10||phone.length()>11) {
 					ok=-1;
@@ -175,6 +182,7 @@ public class UserManager extends DBManager {
 			}
 			while(true) {
 				System.out.println("나이를 입력해주세요");
+				System.out.print("input : ");
 				age=scan.nextLine();
 				if(age.length()<0||age.length()>3) {
 					ok=-1;
