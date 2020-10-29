@@ -66,14 +66,25 @@ public class UserManager extends DBManager {
 	//회원가입 단계
 	public boolean checkingSpecialChar(String str) {
 		 if(!str.matches("[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝]*")){
-			 System.out.println("특수문자있음");
+//확인용			 System.out.println("특수문자있음");
 			 return true;
 		 }else{
-			 System.out.println("특수문자없음");
+//확인용			 System.out.println("특수문자없음");
 			 return false;
 		}
 		
 	}
+	//회원가입 단계
+		public boolean checkingisEng(String str) {
+			 if(!str.matches("[0-9|a-z|A-Z|]*")){
+//확인용				 System.out.println("한글 또는 특수문자있음");
+				 return true;
+			 }else{
+//확인용				 System.out.println("조건에 맞음");
+				 return false;
+			}
+			
+		}
 	//회원가입 main
 	public void registerUser() {  
 		while(true) {
@@ -84,7 +95,7 @@ public class UserManager extends DBManager {
 				System.out.println("아이디를 입력하세요");
 				Id=scan.nextLine();
 				
-				if(checkingSpecialChar(Id)==true) {  //특수문자 포함여부 확인
+				if(checkingisEng(Id)==true) {  //특수문자 포함여부 확인
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
 				}else if(Id.length()<8||Id.length()>15) {    //글자수 범위 예외처리
@@ -106,7 +117,7 @@ public class UserManager extends DBManager {
 			while(true) {
 				System.out.println("비밀번호를 입력하세요");
 				Pwd=scan.nextLine();
-				if(checkingSpecialChar(Pwd)==true) {
+				if(checkingisEng(Pwd)==true) {
 					ok=-1;
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
