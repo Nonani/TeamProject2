@@ -185,8 +185,9 @@ public class MovieManager extends DBManager {
 		
 		
 		try {
+//			System.out.println(isBookedMoive(Integer.parseInt(id)));
 			if(getMovie(Integer.parseInt(id))!=null) {
-				if(getMovie(Integer.parseInt(id)).getTime().equals("00000000"))
+				if(getMovie(Integer.parseInt(id)).getTime().equals("00000000")||isBoo1kedMoive(Integer.parseInt(id)))
 				{
 					System.out.println("올바르지 않은 입력값입니다.");
 					return;
@@ -209,6 +210,31 @@ public class MovieManager extends DBManager {
 			return;
         }
 	}
+	
+	public boolean isBookedMoive(int id) {
+		int cnt = 0;
+		try {
+				Movie movie = getMovie(id);
+				
+				String sql = "Select * from ticket where m_id = ?";
+				pstmt = conn.prepareStatement(sql);
+	        	pstmt.setInt(1, movie.getId());
+	        	rs = pstmt.executeQuery();
+	        	
+	        	while(rs.next())
+				{
+				  cnt++;
+				} 
+	          
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+  
+        	return false;
+        }
+		return cnt!=0;
+		
+	}
+	
 	private Boolean checkTime(int _date, String _time, int theater) {
 		
 		Date today = new Date ();
