@@ -565,7 +565,7 @@ public class MovieManager extends DBManager {
 				pstmt=conn.prepareStatement(sql);
 				rs=pstmt.executeQuery();
 				while(rs.next()) {
-					if(rs.getInt(3)==s_id[0]&&rs.getInt(1)==m_id) {
+					if(rs.getInt(3)==s_id[0]&&rs.getInt(1)==m_id&&!rs.getString(2).contentEquals("NULL")) {
 						return true;
 					}
 				}
@@ -811,6 +811,11 @@ public class MovieManager extends DBManager {
 	//예매 확인 및 취소단계
 	public int[] showBooklist(String u_id) {  //로그인된 아이디로 예매한 영화 정보를 보여준다, 예매한 티켓의 idx를 배열로 리턴
 		int size=0;
+		Calendar cal=Calendar.getInstance();
+		int year=cal.get(Calendar.YEAR);
+		int month=cal.get(Calendar.MONTH)+1;
+		int day=cal.get(Calendar.DAY_OF_MONTH);
+		int nowdate=year*10000+month*100+day;
 		String sql="select * from ticket";
 		String s_info;
 		if(conn!=null) {
@@ -818,7 +823,7 @@ public class MovieManager extends DBManager {
 				pstmt=conn.prepareStatement(sql);
 				rs=pstmt.executeQuery();
 				while(rs.next()) {
-					if(rs.getString(2).contentEquals(u_id)) {
+					if(rs.getString(2).contentEquals(u_id)&&getMovie(rs.getInt(1)).getDate()>=nowdate) {
 						s_info=translationToStr(rs.getInt(3));
 						//System.out.println("티켓 인덱스 : "+rs.getInt(4)+"\t"+getMovie(rs.getInt(1)).getDate()+"\t"+getMovie(rs.getInt(1)).getName()+"\t"+getMovie(rs.getInt(1)).getTime()+"\t"+getMovie(rs.getInt(1)).getTheater_num()+"\t"+"좌석번호"+rs.getInt(3));
 						System.out.printf("티켓 인덱스 : %-3d\t%-10d\t%-10s\t%-10s\t%-10d\t좌석번호 : %-3s\n",rs.getInt(4),getMovie(rs.getInt(1)).getDate(),getMovie(rs.getInt(1)).getName(),getMovie(rs.getInt(1)).getTime(),getMovie(rs.getInt(1)).getTheater_num(),s_info);
@@ -830,6 +835,11 @@ public class MovieManager extends DBManager {
 				e.printStackTrace();
 			}
 		}
+		if(size==0) {
+			int idx[]=new int[1];
+			idx[0]=-1;
+			return idx;
+		}
 		int idx[]=new int[size];
 			
 		int i=0;
@@ -838,7 +848,7 @@ public class MovieManager extends DBManager {
 				pstmt=conn.prepareStatement(sql);
 				rs=pstmt.executeQuery();
 				while(rs.next()) {
-					if(rs.getString(2).contentEquals(u_id)) {
+					if(rs.getString(2).contentEquals(u_id)&&getMovie(rs.getInt(1)).getDate()>=nowdate) {
 						idx[i]=rs.getInt(4);
 						i++;	
 					}
@@ -857,6 +867,10 @@ public class MovieManager extends DBManager {
 		System.out.println("사용자모드>예매 확인 및 취소");
 		System.out.println("예매정보");
 		int arr[]=showBooklist(u_id);
+		if(arr[0]==-1) {
+			System.out.println("예매된 정보가 없습니다.");
+			return 0;
+		}
 		while(true) {
 			System.out.println("취소하려는 예매내역을 입력해주세요");
 			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
@@ -865,7 +879,7 @@ public class MovieManager extends DBManager {
 			if(idx.contentEquals("x")||idx.contentEquals("X")) {
 				return 0;
 			}else if(isInteger(idx)) {
-				ok=1;
+				
 			}else {
 				System.out.println("올바르지 않은 입력값입니다");
 				continue;
@@ -897,17 +911,6 @@ public class MovieManager extends DBManager {
 	}
 	//영화 검색 단계
 	public void SearchMovieByAge(int age) {          //연령 제한으로 검색
-		if(age>0&&age<7) {
-			age=0;
-		}else if(age>=7&&age<=11) {
-			age=7;
-		}else if(age>=12&&age<=14) {
-			age=12;
-		}else if(age>=15&&age<=18) {
-			age=15;
-		}else if(age>=19) {
-			age=19;
-		}
 		int cnt=0;
 		Calendar cal=Calendar.getInstance();
 		int year=cal.get(Calendar.YEAR);
@@ -1033,7 +1036,7 @@ public class MovieManager extends DBManager {
 				System.out.println("사용자모드>영화검색>연령제한 검색");
 				String idx_2;
 				while(true) {
-					System.out.println("몇 세 관람 영화를 찾으시나요? [전체이용가|7세|12세|15세|19세]");
+					System.out.println("몇 세 관람 영화를 찾으시나요? [전체이용가|7세|12세|15세|19세],전체이용가는 0을 입력해주세요");
 					System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 					idx_2=scan.nextLine();
 					if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
@@ -1044,7 +1047,7 @@ public class MovieManager extends DBManager {
 						System.out.println("올바르지 않은 입력값입니다.");
 						continue;
 					}
-					if(Integer.parseInt(idx_2)<0||Integer.parseInt(idx_2)>=100) {
+					if(Integer.parseInt(idx_2)!=0||Integer.parseInt(idx_2)!=7||Integer.parseInt(idx_2)!=12||Integer.parseInt(idx_2)!=15||Integer.parseInt(idx_2)!=19) {
 						System.out.println("올바르지 않은 입력값입니다.");
 						continue;
 					}
