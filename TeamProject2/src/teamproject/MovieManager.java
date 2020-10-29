@@ -576,7 +576,7 @@ public class MovieManager extends DBManager {
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
 			}else if(Integer.parseInt(idx)>emptyseat){
-				System.out.println("남은 좌석을 초과 하였습니다.");
+				System.out.println("해당 인원수가 잔여 좌석보다 많습니다.");
 				continue;
 			}else
 				break;
