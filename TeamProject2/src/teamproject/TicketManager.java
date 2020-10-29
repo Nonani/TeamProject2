@@ -43,10 +43,11 @@ public class TicketManager extends DBManager {
 	}
 	
 	public void SearchUser(String id) {
+		System.out.println("관리자 모드 > 검색 > 사용자 검색 > 예매취소");
 		User u = um.getUser(id);
 		
 		if(u==null) {
-			System.out.println("존재하지 않는 유저 정보입니다.");
+			System.out.println("올바르지 않은 입력값입니다.");
 			return;
 		}
 		int cnt = 0;
@@ -56,7 +57,7 @@ public class TicketManager extends DBManager {
 			}
 		}
 		if(cnt==0) {
-			System.out.println("영화 예매 내역이 존재하지 않습니다.");
+			System.out.println("영화 이력이 없습니다..");
 			return;
 		}else {
 			
