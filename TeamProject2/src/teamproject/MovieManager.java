@@ -57,21 +57,30 @@ public class MovieManager extends DBManager {
 	
 	public void addMovie() {
 		Scanner scan = new Scanner(System.in);
-		String name, director, time;
-		int age_limit, theater, date;
+		String name, director, time, _date;
+		int age_limit, theater, date=0;
 		while(true) {
+			
 			
 			try {
 				System.out.print("상영 날짜를 입력하세요 : ");
-				date = scan.nextInt();
-				if(Integer.toString(date).length()!=8) {
+				_date = scan.nextLine();
+				
+				_date = _date.replaceAll(" ", "").replaceAll("-", "");
+				if(_date.length()!=8) {
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
 				}
-					
-				scan.nextLine();
+				date = Integer.parseInt(_date);
+			} catch (Exception e) {
+				// TODO: handle exception\
+				
+				System.out.println("올바르지 않은 입력값입니다.");
+			}
+			try {
 				System.out.print("상영시간을 입력하세요 : ");
 				time = scan.nextLine();
+				time = time.replaceAll(" ", "").replace("-", "");
 				if(time.length()!=8) {
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
@@ -85,9 +94,8 @@ public class MovieManager extends DBManager {
 				System.out.println("올바르지 않은 입력값입니다.");
 			} catch (Exception e) {
 				// TODO: handle exception\
-				
-				System.out.println("올바르지 않은 입력값입니다.");
 				scan.nextLine();
+				System.out.println("올바르지 않은 입력값입니다.");
 			}
 				
 		}
