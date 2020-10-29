@@ -65,6 +65,7 @@ public class MovieManager extends DBManager {
 			try {
 				System.out.print("상영 날짜를 입력하세요 : ");
 				_date = scan.nextLine();
+				
 				_date = _date.replaceAll(" ", "").replaceAll("-", "");
 				if(_date.length()!=8) {
 					System.out.println("올바르지 않은 입력값입니다.");
