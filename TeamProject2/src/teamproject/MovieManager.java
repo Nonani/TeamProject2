@@ -187,7 +187,7 @@ public class MovieManager extends DBManager {
 		try {
 //			System.out.println(isBookedMoive(Integer.parseInt(id)));
 			if(getMovie(Integer.parseInt(id))!=null) {
-				if(getMovie(Integer.parseInt(id)).getTime().equals("00000000")||isBoo1kedMoive(Integer.parseInt(id)))
+				if(getMovie(Integer.parseInt(id)).getTime().equals("00000000")||isBookedMoive(Integer.parseInt(id)))
 				{
 					System.out.println("올바르지 않은 입력값입니다.");
 					return;
@@ -452,8 +452,8 @@ public class MovieManager extends DBManager {
 		Scanner scan=new Scanner(System.in);
 		int year,month,day;
 		while(true) {
-			System.out.println("날짜를 입력해주세요. [ex)2020년 10월 10일 = 20201010]"
-					+"[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+			System.out.println("날짜를 입력해주세요. [ex)2020년 10월 10일 = 20201010]");
+			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
 			System.out.print("input : ");
 			String date=scan.nextLine();
 			if(date.contentEquals("x")||date.contentEquals("X")) {
@@ -478,7 +478,7 @@ public class MovieManager extends DBManager {
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
 			}else if(checkDate(month,day)) {
-				System.out.println("올바르지 않은 입력값입니다.");
+				System.out.println("존재하지 않는 날짜입니다.");
 				continue;
 			}else if(checkDate(Integer.parseInt(date))==-1) {
 				System.out.println("해당 날짜에 영화정보가 없습니다.");
@@ -526,7 +526,7 @@ public class MovieManager extends DBManager {
 		int ok=-1;
 		while(true) {
 			System.out.println("어느 영화를 선택하시겠습니까?");
-			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+			System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 			System.out.print("input : ");
 			idx=scan.nextLine();
 			if(idx.contentEquals("x")||idx.contentEquals("X")) {
@@ -593,7 +593,7 @@ public class MovieManager extends DBManager {
 		System.out.println("남은 좌석 수 : "+emptyseat);
 		while(true) {
 			System.out.println("몇 사람이 관람하시겠습니까?");
-			System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+			System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 			System.out.print("input : ");
 			idx=scan.nextLine();
 			if(idx.contentEquals("x")||idx.contentEquals("X")) {
@@ -686,7 +686,7 @@ public class MovieManager extends DBManager {
 		for(int i=0;i<num;i++) {
 			while(true) {
 				System.out.println("어느 좌석을 선택하시겠습니까?");
-				System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+				System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 				System.out.print("input : ");
 				idx[i]=scan.nextLine();
 				idx[i]=idx[i].replaceAll("\\p{Z}","");
@@ -721,7 +721,7 @@ public class MovieManager extends DBManager {
 	public String determine() { //예매 확정단계
 		Scanner scan=new Scanner(System.in);
 		System.out.println("예매 내역을 확정하시겠습니까?(y/n)");
-		System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+		System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 		System.out.print("input : ");
 		String idx=scan.nextLine();
 		return idx;
@@ -1115,7 +1115,7 @@ public class MovieManager extends DBManager {
 				System.out.println("사용자모드>영화검색>영화제목 검색");
 				while(true) {
 					System.out.println("검색하고자 하는 영화를 입력해주세요");
-					System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+					System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 					System.out.print("input : ");
 					String idx_2=scan.nextLine();
 					if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
@@ -1144,7 +1144,7 @@ public class MovieManager extends DBManager {
 				String idx_2;
 				while(true) {
 					System.out.println("몇 세 관람 영화를 찾으시나요? [전체이용가|7세|12세|15세|19세],전체이용가는 0을 입력해주세요");
-					System.out.println("[참고 : 이전화면으로 돌아가려면 x(X) 입력]");
+					System.out.println("[참고 : 메인화면으로 돌아가려면 x(X) 입력]");
 					System.out.print("input : ");
 					idx_2=scan.nextLine();
 					if(idx_2.contentEquals("x")||idx_2.contentEquals("X")) {
