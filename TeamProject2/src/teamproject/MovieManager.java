@@ -393,57 +393,16 @@ public class MovieManager extends DBManager {
 		return result;
 	}
 	//영화 예매단계
-	public boolean checkDate(int month,int day) {
-		switch(month) {
-		case 1:
-			if(day>31) {
-				return true;
-			}
-			else break;
-		case 2:
-			if(day>28)
-				return true;
-			else break;
-		case 3:
-			if(day>31)
-				return true;
-			else break;
-		case 4:
-			if(day>30)
-				return true;
-			else break;
-		case 5:
-			if(day>31)
-				return true;
-			else break;
-		case 6:
-			if(day>30)
-				return true;
-			else break;
-		case 7:
-			if(day>31)
-				return true;
-			else break;
-		case 8:
-			if(day>31)
-				return true;
-			else break;
-		case 9:
-			if(day>30)
-				return true;
-			else break;
-		case 10:
-			if(day>31)
-				return true;
-			else break;
-		case 11:
-			if(day>30)
-				return true;
-			else break;
-		case 12:
-			if(day>31)
-				return true;
-			else break;
+	public boolean checkDate(int year,int month,int day) {
+		int _date=year*10000+month*100+day;
+		SimpleDateFormat testdateFormat = new SimpleDateFormat("yyyyMMdd");
+		testdateFormat.setLenient(false);
+		try {
+			Date test_Day = testdateFormat.parse(Integer.toString(_date));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+			return true;
 		}
 		return false;
 	}
@@ -477,7 +436,7 @@ public class MovieManager extends DBManager {
 			}else if(year<2020||month>12||month<1||day<1||day>31) {
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
-			}else if(checkDate(month,day)) {
+			}else if(checkDate(year,month,day)) {
 				System.out.println("존재하지 않는 날짜입니다.");
 				continue;
 			}else if(checkDate(Integer.parseInt(date))==-1) {
