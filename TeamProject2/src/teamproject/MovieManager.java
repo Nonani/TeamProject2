@@ -142,7 +142,8 @@ public class MovieManager extends DBManager {
 			
 			try {
 				System.out.print("연령 제한을 입력하세요 : ");
-				age_limit = scan.nextInt();
+				String _age = scan.nextLine();
+				age_limit = Integer.parseInt(_age);
 				switch (age_limit) {
 				case 0:
 				case 12:
@@ -150,7 +151,6 @@ public class MovieManager extends DBManager {
 				case 19:
 					break;
 				default:
-					scan.nextLine();
 					System.out.println("올바르지 않은 입력값입니다.");
 					continue;
 				}
@@ -158,11 +158,9 @@ public class MovieManager extends DBManager {
 				
 			} catch (Exception e) {
 				// TODO: handle exception\
-				scan.nextLine();
 				System.out.println("올바르지 않은 입력값입니다.");
 				continue;
 			}
-			scan.nextLine();
 			break;
 				
 		}
