@@ -43,7 +43,7 @@ public class MovieManager extends DBManager {
 				e.printStackTrace();
 			}
 		}
-	}
+	}//test
 	
 	@Override
 	public void showAll() {
@@ -67,6 +67,10 @@ public class MovieManager extends DBManager {
 				scan.nextLine();
 				System.out.print("상영시간을 입력하세요 : ");
 				time = scan.nextLine();
+				if(time.length()!=8) {
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
 				System.out.print("상영관 번호를 입력하세요 : ");
 				theater = scan.nextInt();
 				scan.nextLine();
@@ -76,6 +80,7 @@ public class MovieManager extends DBManager {
 				System.out.println("올바르지 않은 입력값입니다.");
 			} catch (Exception e) {
 				// TODO: handle exception\
+				
 				System.out.println("올바르지 않은 입력값입니다.");
 				scan.nextLine();
 			}
@@ -88,6 +93,7 @@ public class MovieManager extends DBManager {
 			System.out.print("영화 이름을 입력하세요 : ");
 			name = scan.nextLine();
 			if(name.length()<=30)
+				if(!name.replaceAll(" ", "").equals(""))
 				break;
 			System.out.println("올바르지 않은 입력값입니다.");
 		}
@@ -96,6 +102,7 @@ public class MovieManager extends DBManager {
 			System.out.print("감독을 입력하세요 : ");
 			director = scan.nextLine();
 			if(director.length()<=30)
+				if(!director.replaceAll(" ", "").equals(""))
 				break;
 			System.out.println("올바르지 않은 입력값입니다.");
 		}
@@ -106,6 +113,17 @@ public class MovieManager extends DBManager {
 			try {
 				System.out.print("연령 제한을 입력하세요 : ");
 				age_limit = scan.nextInt();
+				switch (age_limit) {
+				case 0:
+				case 12:
+				case 15:
+				case 19:
+					break;
+				default:
+					scan.nextLine();
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
 				
 				
 			} catch (Exception e) {
@@ -239,7 +257,7 @@ public class MovieManager extends DBManager {
 			
 			if(startTime >= endTime)
 				return false;
-			System.out.println(startTime - endTime);
+//			System.out.println(startTime - endTime);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 //			System.out.println("parse오류");
