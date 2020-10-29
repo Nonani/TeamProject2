@@ -64,6 +64,11 @@ public class MovieManager extends DBManager {
 			try {
 				System.out.print("상영 날짜를 입력하세요 : ");
 				date = scan.nextInt();
+				if(Integer.toString(date).length()!=8) {
+					System.out.println("올바르지 않은 입력값입니다.");
+					continue;
+				}
+					
 				scan.nextLine();
 				System.out.print("상영시간을 입력하세요 : ");
 				time = scan.nextLine();
@@ -192,7 +197,7 @@ public class MovieManager extends DBManager {
 	        	pstmt.setString(1, "00000000");
 				pstmt.setInt(2, Integer.parseInt(id));
 	            pstmt.execute();
-		        
+		        System.out.println("영화가 삭제되었습니다.");
 			}else {
 				System.out.println("올바르지 않은 입력값입니다.");
 				return;
